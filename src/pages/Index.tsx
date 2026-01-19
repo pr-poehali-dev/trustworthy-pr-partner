@@ -54,21 +54,277 @@ const Index = () => {
       pptx.subject = 'Agency Presentation';
       pptx.title = 'Centre digital & media - PR Partner';
 
-      const slides = document.querySelectorAll('.slide');
+      const colorBurgundy = '6B2C2C';
+      const colorGreen = '2F5745';
+      const colorBlack = '1A1A1A';
+      const colorCream = 'FAF8F5';
 
-      for (let i = 0; i < slides.length; i++) {
-        const slideElement = slides[i] as HTMLElement;
-        const canvas = await html2canvas(slideElement, {
-          scale: 2,
-          useCORS: true,
-          logging: false,
-          backgroundColor: '#FAF8F5'
+      // Слайд 1: Титульный
+      const slide1 = pptx.addSlide();
+      slide1.background = { color: colorBlack };
+      slide1.addText('Ваш надежный\nPR-партнер', {
+        x: 1, y: 1.5, w: 8, h: 2,
+        fontSize: 60, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center'
+      });
+      slide1.addText('для выхода в Россию', {
+        x: 1, y: 3.5, w: 8, h: 0.8,
+        fontSize: 32, color: 'CCCCCC',
+        fontFace: 'Montserrat', align: 'center'
+      });
+      slide1.addText('Полный цикл услуг для продвижения бренда в регионах', {
+        x: 2, y: 4.5, w: 6, h: 0.6,
+        fontSize: 18, color: 'FFFFFF',
+        fontFace: 'Open Sans', align: 'center',
+        fill: { color: colorBurgundy, transparency: 30 }
+      });
+
+      // Слайд 2: Российский рынок
+      const slide2 = pptx.addSlide();
+      slide2.background = { color: colorCream };
+      slide2.addText('Российский рынок сегодня', {
+        x: 0.5, y: 0.5, w: 4.5, h: 1,
+        fontSize: 44, bold: true, color: colorBlack,
+        fontFace: 'Montserrat'
+      });
+      
+      const marketPoints = [
+        '80+ млн активных потребителей',
+        'Свободные ниши после 2022',
+        'Интерес к дружественным странам',
+        'СНГ и Азия воспринимаются как "свои"'
+      ];
+      
+      marketPoints.forEach((text, i) => {
+        slide2.addText('●', {
+          x: 0.5, y: 1.8 + i * 0.6, w: 0.3, h: 0.4,
+          fontSize: 16, color: colorBurgundy
         });
+        slide2.addText(text, {
+          x: 0.9, y: 1.8 + i * 0.6, w: 4, h: 0.4,
+          fontSize: 18, color: '333333',
+          fontFace: 'Open Sans'
+        });
+      });
 
-        const imgData = canvas.toDataURL('image/png');
-        const slide = pptx.addSlide();
-        slide.background = { data: imgData };
-      }
+      slide2.addText('85%', {
+        x: 5.5, y: 1.5, w: 3.5, h: 1.5,
+        fontSize: 80, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center',
+        fill: { color: colorBurgundy }
+      });
+      slide2.addText('ваших клиентов живут\nза пределами Москвы', {
+        x: 5.5, y: 3.2, w: 3.5, h: 1,
+        fontSize: 20, color: 'FFFFFF',
+        fontFace: 'Open Sans', align: 'center',
+        fill: { color: colorBurgundy }
+      });
+
+      // Слайд 3: Регионы
+      const slide3 = pptx.addSlide();
+      slide3.background = { color: colorGreen };
+      slide3.addText('Главный актив – регионы!', {
+        x: 0.5, y: 0.5, w: 9, h: 1,
+        fontSize: 48, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center'
+      });
+
+      cities.forEach((city, i) => {
+        const col = i % 4;
+        const row = Math.floor(i / 4);
+        slide3.addText(city.name, {
+          x: 0.3 + col * 2.35, y: 1.8 + row * 1.2, w: 2.2, h: 0.5,
+          fontSize: 20, bold: true, color: 'FFFFFF',
+          fontFace: 'Montserrat',
+          fill: { color: colorBlack, transparency: 30 }
+        });
+        slide3.addText(city.description, {
+          x: 0.3 + col * 2.35, y: 2.3 + row * 1.2, w: 2.2, h: 0.6,
+          fontSize: 12, color: 'DDDDDD',
+          fontFace: 'Open Sans',
+          fill: { color: colorBlack, transparency: 30 }
+        });
+      });
+
+      slide3.addText('19 лет работы в регионах России', {
+        x: 1, y: 4.8, w: 8, h: 0.6,
+        fontSize: 22, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center'
+      });
+
+      // Слайд 4: Услуги
+      const slide4 = pptx.addSlide();
+      slide4.background = { color: colorCream };
+      slide4.addText('Centre digital & media', {
+        x: 1, y: 0.5, w: 8, h: 0.7,
+        fontSize: 42, bold: true, color: colorBlack,
+        fontFace: 'Montserrat', align: 'center'
+      });
+      slide4.addText('Ваш PR-мост в Россию', {
+        x: 1, y: 1.2, w: 8, h: 0.5,
+        fontSize: 20, color: '666666',
+        fontFace: 'Open Sans', align: 'center'
+      });
+
+      services.forEach((service, i) => {
+        const col = i % 3;
+        const row = Math.floor(i / 3);
+        slide4.addText(service.title, {
+          x: 0.3 + col * 3.3, y: 2.2 + row * 1.4, w: 3, h: 0.5,
+          fontSize: 16, bold: true, color: colorBlack,
+          fontFace: 'Montserrat',
+          fill: { color: 'FFFFFF' }
+        });
+        slide4.addText(service.description, {
+          x: 0.3 + col * 3.3, y: 2.7 + row * 1.4, w: 3, h: 0.7,
+          fontSize: 12, color: '555555',
+          fontFace: 'Open Sans',
+          fill: { color: 'FFFFFF' }
+        });
+      });
+
+      // Слайд 5: Преимущества
+      const slide5 = pptx.addSlide();
+      slide5.background = { color: 'FFFFFF' };
+      slide5.addText('Почему мы?', {
+        x: 1, y: 0.5, w: 8, h: 0.8,
+        fontSize: 44, bold: true, color: colorBlack,
+        fontFace: 'Montserrat', align: 'center'
+      });
+
+      advantages.forEach((adv, i) => {
+        const col = i % 3;
+        const row = Math.floor(i / 3);
+        slide5.addText(adv.title, {
+          x: 0.3 + col * 3.3, y: 1.8 + row * 1.5, w: 3, h: 0.5,
+          fontSize: 20, bold: true, color: colorBlack,
+          fontFace: 'Montserrat',
+          fill: { color: colorCream }
+        });
+        slide5.addText(adv.text, {
+          x: 0.3 + col * 3.3, y: 2.3 + row * 1.5, w: 3, h: 0.6,
+          fontSize: 14, color: '555555',
+          fontFace: 'Open Sans',
+          fill: { color: colorCream }
+        });
+      });
+
+      slide5.addText('100+ специалистов', {
+        x: 2.5, y: 4.8, w: 5, h: 0.5,
+        fontSize: 28, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center',
+        fill: { color: colorBurgundy }
+      });
+      slide5.addText('Ижевск • Москва • Санкт-Петербург', {
+        x: 2.5, y: 5.3, w: 5, h: 0.4,
+        fontSize: 16, color: 'FFFFFF',
+        fontFace: 'Open Sans', align: 'center',
+        fill: { color: colorBurgundy }
+      });
+
+      // Слайд 6: Кейсы 1-4
+      const slide6 = pptx.addSlide();
+      slide6.background = { color: colorBlack };
+      slide6.addText('Наши кейсы', {
+        x: 1, y: 0.5, w: 8, h: 0.8,
+        fontSize: 48, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center'
+      });
+
+      cases.slice(0, 4).forEach((caseItem, i) => {
+        const col = i % 2;
+        const row = Math.floor(i / 2);
+        slide6.addText(`${i + 1}`, {
+          x: 0.5 + col * 5, y: 1.8 + row * 1.8, w: 0.5, h: 0.5,
+          fontSize: 24, bold: true, color: 'FFFFFF',
+          fontFace: 'Montserrat', align: 'center',
+          fill: { color: colorBurgundy }
+        });
+        slide6.addText(caseItem.title, {
+          x: 1.2 + col * 5, y: 1.8 + row * 1.8, w: 3.5, h: 0.4,
+          fontSize: 18, bold: true, color: 'FFFFFF',
+          fontFace: 'Montserrat'
+        });
+        slide6.addText(caseItem.task, {
+          x: 1.2 + col * 5, y: 2.2 + row * 1.8, w: 3.5, h: 0.3,
+          fontSize: 11, color: 'CCCCCC',
+          fontFace: 'Open Sans'
+        });
+        slide6.addText(caseItem.result, {
+          x: 1.2 + col * 5, y: 2.6 + row * 1.8, w: 3.5, h: 0.5,
+          fontSize: 12, bold: true, color: 'FFFFFF',
+          fontFace: 'Open Sans',
+          fill: { color: colorGreen }
+        });
+      });
+
+      // Слайд 7: Кейс 5
+      const slide7 = pptx.addSlide();
+      slide7.background = { color: colorGreen };
+      slide7.addText('Еще кейсы', {
+        x: 1, y: 0.5, w: 8, h: 0.8,
+        fontSize: 48, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center'
+      });
+
+      slide7.addText('5', {
+        x: 2, y: 2, w: 0.6, h: 0.6,
+        fontSize: 28, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center',
+        fill: { color: colorBurgundy }
+      });
+      slide7.addText(cases[4].title, {
+        x: 2.8, y: 2, w: 5, h: 0.6,
+        fontSize: 28, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat'
+      });
+      slide7.addText(cases[4].task, {
+        x: 2.8, y: 2.7, w: 5, h: 0.4,
+        fontSize: 16, color: 'DDDDDD',
+        fontFace: 'Open Sans'
+      });
+      slide7.addText(cases[4].result, {
+        x: 2.8, y: 3.3, w: 5, h: 0.6,
+        fontSize: 18, bold: true, color: 'FFFFFF',
+        fontFace: 'Open Sans',
+        fill: { color: colorBlack, transparency: 30 }
+      });
+
+      // Слайд 8: Контакты
+      const slide8 = pptx.addSlide();
+      slide8.background = { color: colorBlack };
+      slide8.addText('Давайте обсудим ваши задачи!', {
+        x: 1, y: 1, w: 8, h: 0.8,
+        fontSize: 48, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center'
+      });
+
+      slide8.addText('Софья Самойлова', {
+        x: 2, y: 2.5, w: 6, h: 0.6,
+        fontSize: 32, bold: true, color: 'FFFFFF',
+        fontFace: 'Montserrat', align: 'center'
+      });
+      slide8.addText('Директор по экспорту', {
+        x: 2, y: 3.1, w: 6, h: 0.4,
+        fontSize: 18, color: 'CCCCCC',
+        fontFace: 'Open Sans', align: 'center'
+      });
+
+      slide8.addText('s.samoylova@cdm.team', {
+        x: 2.5, y: 3.9, w: 5, h: 0.4,
+        fontSize: 16, color: 'FFFFFF',
+        fontFace: 'Open Sans', align: 'center'
+      });
+      slide8.addText('+7 922 525 65 75', {
+        x: 2.5, y: 4.4, w: 5, h: 0.4,
+        fontSize: 16, color: 'FFFFFF',
+        fontFace: 'Open Sans', align: 'center'
+      });
+      slide8.addText('centredigital.ru', {
+        x: 2.5, y: 4.9, w: 5, h: 0.4,
+        fontSize: 16, color: 'FFFFFF',
+        fontFace: 'Open Sans', align: 'center'
+      });
 
       await pptx.writeFile({ fileName: 'Centre-Digital-Media.pptx' });
     } catch (error) {
