@@ -3,9 +3,56 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Separator } from '@/components/ui/separator';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const Index = () => {
   const [activeService, setActiveService] = useState(0);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const exportToPDF = async () => {
+    setIsExporting(true);
+    try {
+      const element = document.getElementById('pdf-content');
+      if (!element) return;
+
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const imgWidth = 210;
+      const pageHeight = 297;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save('Centre-Digital-Media-Presentation.pdf');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const services = [
     {
@@ -121,7 +168,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" id="pdf-content">
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -144,6 +191,10 @@ const Index = () => {
               <button onClick={() => scrollToSection('contact')} className="text-sm text-gray-700 hover:text-primary transition-colors">
                 Контакты
               </button>
+              <Button onClick={exportToPDF} disabled={isExporting} variant="outline" className="gap-2">
+                <Icon name="Download" size={18} />
+                {isExporting ? 'Создание PDF...' : 'Скачать PDF'}
+              </Button>
               <Button onClick={() => scrollToSection('contact')}>
                 Связаться
               </Button>
