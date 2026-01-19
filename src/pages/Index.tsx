@@ -2,48 +2,37 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
-import { Separator } from '@/components/ui/separator';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 const Index = () => {
-  const [activeService, setActiveService] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
 
   const exportToPDF = async () => {
     setIsExporting(true);
     try {
-      const element = document.getElementById('pdf-content');
-      if (!element) return;
-
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-        backgroundColor: '#ffffff'
-      });
-
-      const imgData = canvas.toDataURL('image/png');
+      const slides = document.querySelectorAll('.slide');
       const pdf = new jsPDF({
-        orientation: 'portrait',
+        orientation: 'landscape',
         unit: 'mm',
         format: 'a4'
       });
 
-      const imgWidth = 210;
-      const pageHeight = 297;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+      for (let i = 0; i < slides.length; i++) {
+        const slide = slides[i] as HTMLElement;
+        const canvas = await html2canvas(slide, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff'
+        });
 
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 297;
+        const imgHeight = 210;
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        if (i > 0) pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       }
 
       pdf.save('Centre-Digital-Media-Presentation.pdf');
@@ -73,242 +62,165 @@ const Index = () => {
     {
       icon: 'Video',
       title: 'Продакшн',
-      description: 'Видео и аудио: от Reels до имиджевых фильмов. Собственная студия и команда профессионалов'
+      description: 'Видео и аудио: от Reels до имиджевых фильмов'
     },
     {
       icon: 'TrendingUp',
       title: 'Медиазакупки',
-      description: 'ТВ, радио, digital, наружка. Единое окно и полный контроль рекламной кампании и подрядчиков'
+      description: 'ТВ, радио, digital, наружка'
     },
     {
       icon: 'BarChart',
       title: 'Аналитика',
-      description: 'Прозрачная отчётность по охватам, лидам и продажам в реальном времени'
+      description: 'Прозрачная отчётность в реальном времени'
     }
   ];
 
   const cities = [
-    { name: 'Ижевск', description: 'Мощный промышленный кластер, оружейная столица России' },
-    { name: 'Казань', description: 'Исторический перекресток культур и технологий' },
-    { name: 'Екатеринбург', description: 'Промышленное сердце и деловая столица Урала' },
+    { name: 'Ижевск', description: 'Промышленный кластер, оружейная столица' },
+    { name: 'Казань', description: 'Перекресток культур и технологий' },
+    { name: 'Екатеринбург', description: 'Деловая столица Урала' },
     { name: 'Новосибирск', description: 'Научный и логистический хаб Сибири' },
     { name: 'Краснодар', description: 'Аграрный и курортный центр Юга' },
     { name: 'Нижний Новгород', description: 'Индустриальный кластер Поволжья' },
-    { name: 'Ростов-на-Дону', description: '«Ворота Кавказа» и крупный транспортный узел' }
+    { name: 'Ростов-на-Дону', description: 'Ворота Кавказа и транспортный узел' }
   ];
 
   const advantages = [
-    {
-      icon: 'Award',
-      title: '19 лет опыта',
-      text: '19-летний опыт работы в маркетинге, контенте, аналитике, PR и GR. Знаем, как продвигаться в субъектах РФ и на страну в целом'
-    },
-    {
-      icon: 'Users',
-      title: 'Собственная команда',
-      text: 'Опытные копирайтеры, дизайнеры, операторы, SMM-специалисты, продюсеры, продакшн'
-    },
-    {
-      icon: 'Radio',
-      title: 'Собственные медиа',
-      text: 'Радиостанции, онлайн-СМИ, соцсети с многомиллионной аудиторией, прямой доступ к федеральным СМИ'
-    },
-    {
-      icon: 'Package',
-      title: 'Единое окно',
-      text: 'Ведем клиентов комплексно – от стратегии до отчётности'
-    },
-    {
-      icon: 'PieChart',
-      title: 'Прозрачность',
-      text: 'Четкое согласование целей до старта, регулярная отчётность по всем KPI'
-    },
-    {
-      icon: 'Zap',
-      title: 'Гибкость',
-      text: 'Мобильнее и быстрее, чем крупные федеральные агентства'
-    }
+    { icon: 'Award', title: '19 лет опыта', text: 'Маркетинг, контент, PR и GR в регионах РФ' },
+    { icon: 'Users', title: 'Команда 100+', text: 'Копирайтеры, дизайнеры, SMM, продакшн' },
+    { icon: 'Radio', title: 'Свои медиа', text: 'Радио, онлайн-СМИ, миллионная аудитория' },
+    { icon: 'Package', title: 'Единое окно', text: 'От стратегии до отчётности' },
+    { icon: 'PieChart', title: 'Прозрачность', text: 'Регулярная отчётность по KPI' },
+    { icon: 'Zap', title: 'Гибкость', text: 'Быстрее федеральных агентств' }
   ];
 
   const cases = [
     {
       title: 'Федеральный блог-тур',
-      task: 'Организовать блог-тур для федеральных инфлюенсеров, чтобы сформировать новый, привлекательный образ республики как туристического направления',
-      solution: 'Отобрали 10 релевантных блогеров (общая аудитория 1 млн+). Организовали трехдневный тур «под ключ»: логистика, уникальная программа, встречи с Главой республики',
-      result: 'Более 70 публикаций, 400+ тыс. просмотров. Превысили KPI в 3.5 раза'
+      task: 'Сформировать образ республики для туристов',
+      result: '70 публикаций, 400K+ просмотров, KPI × 3.5'
     },
     {
-      title: 'Бренд-платформа для пельменей',
-      task: 'Подготовить бренд-производителя пельменей к масштабированию и выходу в федеральные торговые сети',
-      solution: 'Провели анализ рынка. Разработали логотип, фирменный стиль и брендбук. Подготовили три варианта дизайна упаковки, провели съёмку продукции',
-      result: 'Полный пакет бренд-активов, готовый к производству и печати'
+      title: 'Бренд для пельменей',
+      task: 'Выход в федеральные сети',
+      result: 'Полный брендбук и дизайн упаковки'
     },
     {
-      title: 'Имиджевый ролик для региона',
-      task: 'Создать яркий, запоминающийся ролик для Правительства Удмуртии на выставке-форуме «Россия» на ВДНХ',
-      solution: 'Разработали уникальную концепцию с девушкой-символом региона. Провели съёмки, добавили графику и национальное аудио оформление',
-      result: '55 000+ просмотров за первый день, более 100 000 просмотров всего'
+      title: 'Ролик для региона',
+      task: 'Презентация Удмуртии на ВДНХ',
+      result: '55K за день, 100K+ всего'
     },
     {
-      title: 'Инфлюенс-кампания для завода',
-      task: 'Повысить узнаваемость бренда лакокрасочного завода за счет размещения у блогеров',
-      solution: 'Отобрали блогеров в нишах DIY и ремонта. Организовали всё «под ключ»: переговоры, доставку, съёмки, контроль публикаций, UTM-отслеживание',
-      result: 'Рост поисковых запросов по отдельным маркам до 200%, в целом по бренду – на 22%'
+      title: 'Инфлюенс для завода',
+      task: 'Узнаваемость лакокрасочного бренда',
+      result: 'Рост запросов до 200%, +22% по бренду'
     },
     {
-      title: 'Видео для экспортеров',
-      task: 'Показать экспортерам Удмуртии, что их товары востребованы за рубежом',
-      solution: 'Создали серию игровых видеороликов с героями из ОАЭ, Японии, Италии и Узбекистана. Для каждой страны – отдельная история с учётом менталитета',
-      result: 'Ролики используются в digital-продвижении, на выставках и при работе с партнерами'
+      title: 'Видео для экспорта',
+      task: 'Показать востребованность за рубежом',
+      result: 'Используется на выставках и в digital'
     }
   ];
 
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <div className="min-h-screen" id="pdf-content">
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
-        <div className="container mx-auto px-6 py-4">
+    <div className="min-h-screen bg-gray-100">
+      <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
+        <div className="container mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xl">C</span>
               </div>
-              <span className="font-semibold text-xl text-secondary">Centre digital & media</span>
+              <span className="font-semibold text-lg">Centre digital & media</span>
             </div>
-            <div className="hidden md:flex items-center gap-8">
-              <button onClick={() => scrollToSection('about')} className="text-sm text-gray-700 hover:text-primary transition-colors">
-                О нас
-              </button>
-              <button onClick={() => scrollToSection('services')} className="text-sm text-gray-700 hover:text-primary transition-colors">
-                Услуги
-              </button>
-              <button onClick={() => scrollToSection('cases')} className="text-sm text-gray-700 hover:text-primary transition-colors">
-                Кейсы
-              </button>
-              <button onClick={() => scrollToSection('contact')} className="text-sm text-gray-700 hover:text-primary transition-colors">
-                Контакты
-              </button>
-              <Button onClick={exportToPDF} disabled={isExporting} variant="outline" className="gap-2">
-                <Icon name="Download" size={18} />
-                {isExporting ? 'Создание PDF...' : 'Скачать PDF'}
-              </Button>
-              <Button onClick={() => scrollToSection('contact')}>
-                Связаться
-              </Button>
-            </div>
+            <Button onClick={exportToPDF} disabled={isExporting} className="gap-2 bg-gradient-to-r from-blue-600 to-purple-600">
+              <Icon name="Download" size={18} />
+              {isExporting ? 'Создание PDF...' : 'Скачать презентацию'}
+            </Button>
           </div>
         </div>
       </nav>
 
-      <section className="pt-32 pb-20 bg-gradient-to-br from-secondary via-secondary to-blue-900 text-white">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-fade-in">
-              Ваш надежный<br />PR-партнер для выхода в Россию
-            </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-10 leading-relaxed">
-              Полный цикл услуг для продвижения бренда в регионах России
-            </p>
-            <Button 
-              size="lg" 
-              className="bg-white text-secondary hover:bg-blue-50 text-lg px-8 py-6"
-              onClick={() => scrollToSection('contact')}
-            >
-              Обсудить проект
-            </Button>
+      <div className="pt-20 space-y-8 pb-8" id="pdf-content">
+        <div className="slide min-h-[600px] bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 flex items-center justify-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30"></div>
+          <div className="text-center text-white z-10 px-8">
+            <h1 className="text-7xl font-bold mb-6 drop-shadow-lg">Ваш надежный<br />PR-партнер</h1>
+            <p className="text-3xl mb-8 text-white/90">для выхода в Россию</p>
+            <div className="inline-block bg-white/20 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/30">
+              <p className="text-xl">Полный цикл услуг для продвижения бренда в регионах</p>
+            </div>
           </div>
         </div>
-      </section>
 
-      <section className="py-20 bg-blue-50" id="about">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
+        <div className="slide min-h-[600px] bg-gradient-to-br from-blue-50 to-purple-50 flex items-center">
+          <div className="container mx-auto px-12">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-6">
-                  Российский рынок сегодня
-                </h2>
-                <div className="space-y-4 text-lg text-gray-700">
-                  <p>
-                    <Icon name="Check" className="inline text-primary mr-2" size={24} />
-                    Более 80 миллионов активных потребителей
-                  </p>
-                  <p>
-                    <Icon name="Check" className="inline text-primary mr-2" size={24} />
-                    После 2022 года освободились ниши – реальные возможности для новых производителей
-                  </p>
-                  <p>
-                    <Icon name="Check" className="inline text-primary mr-2" size={24} />
-                    Жители готовы пробовать товары из дружественных стран
-                  </p>
-                  <p>
-                    <Icon name="Check" className="inline text-primary mr-2" size={24} />
-                    Продукция из СНГ, Азии и Ближнего Востока воспринимается как "свое, родное"
-                  </p>
+                <h2 className="text-5xl font-bold text-gray-900 mb-8">Российский рынок сегодня</h2>
+                <div className="space-y-4">
+                  {[
+                    '80+ млн активных потребителей',
+                    'Свободные ниши после 2022',
+                    'Интерес к дружественным странам',
+                    'СНГ и Азия воспринимаются как "свои"'
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm">
+                      <div className="w-3 h-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
+                      <p className="text-xl text-gray-700">{item}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="bg-white p-12 rounded-3xl shadow-lg text-center">
-                <div className="text-6xl font-bold text-primary mb-4">85%</div>
-                <p className="text-xl text-gray-700">
-                  ваших будущих клиентов живут и принимают решения за пределами Москвы
-                </p>
+              <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-12 rounded-3xl text-white shadow-2xl">
+                <div className="text-8xl font-bold mb-4">85%</div>
+                <p className="text-2xl leading-relaxed">ваших клиентов живут за пределами Москвы</p>
               </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-primary to-blue-600 text-white rounded-3xl p-12 mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">
-                Главный актив бизнеса – регионы страны!
-              </h2>
-              <p className="text-xl text-center mb-12 text-blue-100">
-                У каждого города России – свой культурный код и свой покупатель!
-              </p>
-              <div className="grid md:grid-cols-2 gap-6">
-                {cities.map((city, idx) => (
-                  <Card key={idx} className="bg-white/10 backdrop-blur-sm border-white/20">
-                    <CardContent className="p-6">
-                      <h3 className="text-2xl font-semibold mb-2">{city.name}</h3>
-                      <p className="text-blue-100">{city.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-              <p className="text-xl text-center mt-12">
-                Мы знаем эти города и их жителей, потому что работаем среди них и для них – более 19 лет!
-              </p>
             </div>
           </div>
         </div>
-      </section>
 
-      <section className="py-20 bg-white" id="services">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-6">
-                Centre digital & media – ваш PR-мост в Россию
-              </h2>
-              <p className="text-xl text-gray-600">
-                Мы оказываем полный цикл услуг для продвижения бренда в регионах
-              </p>
+        <div className="slide min-h-[600px] bg-gradient-to-br from-purple-600 to-pink-600 flex items-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
+          <div className="container mx-auto px-12 z-10">
+            <h2 className="text-6xl font-bold text-white text-center mb-12">Главный актив – регионы!</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {cities.slice(0, 4).map((city, i) => (
+                <Card key={i} className="bg-white/10 backdrop-blur-md border-white/20">
+                  <CardContent className="p-6 text-white">
+                    <h3 className="text-2xl font-bold mb-2">{city.name}</h3>
+                    <p className="text-white/80">{city.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
+            <div className="grid md:grid-cols-3 gap-4 mt-4">
+              {cities.slice(4).map((city, i) => (
+                <Card key={i} className="bg-white/10 backdrop-blur-md border-white/20">
+                  <CardContent className="p-6 text-white">
+                    <h3 className="text-2xl font-bold mb-2">{city.name}</h3>
+                    <p className="text-white/80">{city.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <p className="text-2xl text-white text-center mt-8 font-semibold">19 лет работы в регионах России</p>
+          </div>
+        </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, idx) => (
-                <Card 
-                  key={idx}
-                  className={`cursor-pointer transition-all hover:shadow-xl border-2 ${
-                    activeService === idx ? 'border-primary shadow-xl' : 'border-gray-100'
-                  }`}
-                  onClick={() => setActiveService(idx)}
-                >
+        <div className="slide min-h-[600px] bg-gradient-to-br from-blue-50 to-purple-50 flex items-center">
+          <div className="container mx-auto px-12">
+            <h2 className="text-5xl font-bold text-center mb-4 text-gray-900">Centre digital & media</h2>
+            <p className="text-2xl text-center text-gray-600 mb-12">Ваш PR-мост в Россию</p>
+            <div className="grid md:grid-cols-3 gap-6">
+              {services.map((service, i) => (
+                <Card key={i} className="border-2 border-purple-200 hover:border-purple-400 transition-all hover:shadow-xl">
                   <CardContent className="p-8">
-                    <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                      <Icon name={service.icon} className="text-primary" size={28} />
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mb-4">
+                      <Icon name={service.icon} className="text-white" size={32} />
                     </div>
-                    <h3 className="text-xl font-semibold mb-3 text-secondary">{service.title}</h3>
+                    <h3 className="text-xl font-bold mb-2 text-gray-900">{service.title}</h3>
                     <p className="text-gray-600">{service.description}</p>
                   </CardContent>
                 </Card>
@@ -316,59 +228,47 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
 
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-16 text-center">
-              Почему мы?
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {advantages.map((adv, idx) => (
-                <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                    <Icon name={adv.icon} className="text-primary" size={24} />
+        <div className="slide min-h-[600px] bg-gradient-to-br from-purple-50 to-pink-50 flex items-center">
+          <div className="container mx-auto px-12">
+            <h2 className="text-5xl font-bold text-center mb-12 text-gray-900">Почему мы?</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {advantages.map((adv, i) => (
+                <div key={i} className="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-purple-600">
+                  <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-4">
+                    <Icon name={adv.icon} className="text-white" size={28} />
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 text-secondary">{adv.title}</h3>
-                  <p className="text-gray-600">{adv.text}</p>
+                  <h3 className="text-2xl font-bold mb-3 text-gray-900">{adv.title}</h3>
+                  <p className="text-gray-600 text-lg">{adv.text}</p>
                 </div>
               ))}
             </div>
             <div className="text-center mt-12">
-              <p className="text-2xl font-semibold text-secondary">
-                Наша команда – более 100 специалистов из Ижевска, Москвы и Санкт-Петербурга!
-              </p>
+              <div className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-12 py-6 rounded-2xl shadow-xl">
+                <p className="text-3xl font-bold">100+ специалистов</p>
+                <p className="text-xl mt-2">Ижевск • Москва • Санкт-Петербург</p>
+              </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <section className="py-20 bg-white" id="cases">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-16 text-center">
-              Наши кейсы
-            </h2>
-            <div className="space-y-12">
-              {cases.map((caseItem, idx) => (
-                <Card key={idx} className="border-l-4 border-primary shadow-lg hover:shadow-xl transition-shadow">
-                  <CardContent className="p-8">
-                    <h3 className="text-2xl font-bold text-secondary mb-6">{caseItem.title}</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm font-semibold text-primary uppercase mb-2">Задача</p>
-                        <p className="text-gray-700">{caseItem.task}</p>
+        <div className="slide min-h-[600px] bg-gradient-to-br from-blue-600 to-purple-600 flex items-center">
+          <div className="container mx-auto px-12">
+            <h2 className="text-6xl font-bold text-white text-center mb-12">Наши кейсы</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {cases.slice(0, 4).map((caseItem, i) => (
+                <Card key={i} className="bg-white/10 backdrop-blur-md border-white/20">
+                  <CardContent className="p-8 text-white">
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span className="text-2xl font-bold">{i + 1}</span>
                       </div>
-                      <Separator />
                       <div>
-                        <p className="text-sm font-semibold text-primary uppercase mb-2">Решение</p>
-                        <p className="text-gray-700">{caseItem.solution}</p>
-                      </div>
-                      <Separator />
-                      <div>
-                        <p className="text-sm font-semibold text-primary uppercase mb-2">Результат</p>
-                        <p className="text-gray-700 font-medium">{caseItem.result}</p>
+                        <h3 className="text-2xl font-bold mb-2">{caseItem.title}</h3>
+                        <p className="text-white/80 text-sm mb-3">{caseItem.task}</p>
+                        <div className="bg-white/20 px-4 py-2 rounded-lg">
+                          <p className="font-semibold">{caseItem.result}</p>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -377,32 +277,50 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
 
-      <section className="py-20 bg-gradient-to-br from-secondary to-blue-900 text-white" id="contact">
-        <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8">
-              Давайте обсудим ваши задачи!
-            </h2>
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <CardContent className="p-12">
-                <div className="space-y-6 text-left">
-                  <div>
-                    <p className="text-2xl font-semibold mb-2">Софья Самойлова</p>
-                    <p className="text-blue-100 text-lg">Директор по экспорту</p>
+        <div className="slide min-h-[600px] bg-gradient-to-br from-purple-600 to-pink-600 flex items-center">
+          <div className="container mx-auto px-12">
+            <h2 className="text-6xl font-bold text-white text-center mb-12">Еще кейсы</h2>
+            <Card className="bg-white/10 backdrop-blur-md border-white/20 max-w-2xl mx-auto">
+              <CardContent className="p-12 text-white text-center">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl font-bold">5</span>
                   </div>
-                  <Separator className="bg-white/20" />
-                  <div className="space-y-3">
-                    <a href="mailto:s.samoylova@cdm.team" className="flex items-center gap-3 text-lg hover:text-primary transition-colors">
+                  <div className="text-left">
+                    <h3 className="text-3xl font-bold mb-3">{cases[4].title}</h3>
+                    <p className="text-white/80 text-lg mb-4">{cases[4].task}</p>
+                    <div className="bg-white/20 px-6 py-3 rounded-lg">
+                      <p className="font-semibold text-xl">{cases[4].result}</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <div className="slide min-h-[600px] bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 flex items-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30"></div>
+          <div className="container mx-auto px-12 z-10">
+            <h2 className="text-6xl font-bold text-white text-center mb-12">Давайте обсудим ваши задачи!</h2>
+            <Card className="bg-white/10 backdrop-blur-md border-white/20 max-w-3xl mx-auto">
+              <CardContent className="p-12">
+                <div className="grid md:grid-cols-2 gap-8 text-white">
+                  <div>
+                    <p className="text-3xl font-bold mb-2">Софья Самойлова</p>
+                    <p className="text-xl text-white/80">Директор по экспорту</p>
+                  </div>
+                  <div className="space-y-4">
+                    <a href="mailto:s.samoylova@cdm.team" className="flex items-center gap-3 text-lg hover:text-pink-200 transition-colors">
                       <Icon name="Mail" size={24} />
                       s.samoylova@cdm.team
                     </a>
-                    <a href="tel:+79225256575" className="flex items-center gap-3 text-lg hover:text-primary transition-colors">
+                    <a href="tel:+79225256575" className="flex items-center gap-3 text-lg hover:text-pink-200 transition-colors">
                       <Icon name="Phone" size={24} />
                       +7 922 525 65 75
                     </a>
-                    <a href="https://centredigital.ru" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-lg hover:text-primary transition-colors">
+                    <a href="https://centredigital.ru" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-lg hover:text-pink-200 transition-colors">
                       <Icon name="Globe" size={24} />
                       centredigital.ru
                     </a>
@@ -412,13 +330,7 @@ const Index = () => {
             </Card>
           </div>
         </div>
-      </section>
-
-      <footer className="bg-secondary text-white py-8">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-blue-100">© 2025 Centre digital & media. Все права защищены.</p>
-        </div>
-      </footer>
+      </div>
     </div>
   );
 };
