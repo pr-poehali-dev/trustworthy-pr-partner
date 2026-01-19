@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import pptxgen from 'pptxgenjs';
 
 const Index = () => {
   const [isExporting, setIsExporting] = useState(false);
@@ -38,6 +39,40 @@ const Index = () => {
       pdf.save('Centre-Digital-Media-Presentation.pdf');
     } catch (error) {
       console.error('Error generating PDF:', error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const exportToPPTX = async () => {
+    setIsExporting(true);
+    try {
+      const pptx = new pptxgen();
+      pptx.layout = 'LAYOUT_WIDE';
+      pptx.author = 'Centre digital & media';
+      pptx.company = 'Centre digital & media';
+      pptx.subject = 'Презентация агентства';
+      pptx.title = 'Centre digital & media - Ваш PR-партнер';
+
+      const slides = document.querySelectorAll('.slide');
+
+      for (let i = 0; i < slides.length; i++) {
+        const slideElement = slides[i] as HTMLElement;
+        const canvas = await html2canvas(slideElement, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#FAF8F5'
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const slide = pptx.addSlide();
+        slide.background = { data: imgData };
+      }
+
+      await pptx.writeFile({ fileName: 'Centre-Digital-Media-Presentation.pptx' });
+    } catch (error) {
+      console.error('Error generating PPTX:', error);
     } finally {
       setIsExporting(false);
     }
@@ -134,10 +169,16 @@ const Index = () => {
               </div>
               <span className="font-semibold text-lg">Centre digital & media</span>
             </div>
-            <Button onClick={exportToPDF} disabled={isExporting} className="gap-2 bg-gradient-to-r from-[#6B2C2C] to-[#541F1F] hover:from-[#541F1F] hover:to-[#6B2C2C]">
-              <Icon name="Download" size={18} />
-              {isExporting ? 'Создание PDF...' : 'Скачать презентацию'}
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={exportToPDF} disabled={isExporting} className="gap-2 bg-gradient-to-r from-[#6B2C2C] to-[#541F1F] hover:from-[#541F1F] hover:to-[#6B2C2C]">
+                <Icon name="FileText" size={18} />
+                {isExporting ? 'Экспорт...' : 'PDF'}
+              </Button>
+              <Button onClick={exportToPPTX} disabled={isExporting} className="gap-2 bg-gradient-to-r from-[#2F5745] to-[#1A1A1A] hover:from-[#1A1A1A] hover:to-[#2F5745]">
+                <Icon name="Presentation" size={18} />
+                {isExporting ? 'Экспорт...' : 'PPTX'}
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
