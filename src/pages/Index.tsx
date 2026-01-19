@@ -209,308 +209,227 @@ const Index = () => {
         x: 2, y: 4.5, w: 6, h: 0.7,
         fill: { color: colorBurgundy, transparency: 20 }
       });
-      slide1.addText('Полный цикл услуг для продвижения бренда в регионах', {
+      slide1.addText('85% клиентов превышают KPI благодаря глубокой локализации', {
         x: 2, y: 4.5, w: 6, h: 0.7,
         fontSize: 16, color: 'FFFFFF',
         fontFace: 'Arial', align: 'center', valign: 'middle'
       });
 
-      // Slide 2: Market
+      // Slide 2: Services
       const slide2 = pptx.addSlide();
       slide2.background = { color: colorCream };
-      slide2.addText('Российский рынок сегодня', {
-        x: 0.5, y: 0.6, w: 5, h: 0.8,
+      slide2.addText('УСЛУГИ', {
+        x: 0.5, y: 0.5, w: 9, h: 0.6,
         fontSize: 36, bold: true, color: colorBlack,
         fontFace: 'Arial'
       });
-      
-      marketPoints.forEach((text, i) => {
-        slide2.addText('●', {
-          x: 0.5, y: 1.7 + i * 0.7, w: 0.2, h: 0.3,
-          fontSize: 14, color: colorBurgundy
+      services.forEach((service, idx) => {
+        const row = Math.floor(idx / 2);
+        const col = idx % 2;
+        const xPos = 0.5 + col * 4.75;
+        const yPos = 1.5 + row * 1.5;
+        slide2.addShape(pptx.ShapeType.rect, {
+          x: xPos, y: yPos, w: 4.5, h: 1.3,
+          fill: { color: colorBurgundy, transparency: 10 }
         });
-        slide2.addText(text, {
-          x: 0.8, y: 1.7 + i * 0.7, w: 8.2, h: 0.6,
-          fontSize: 14, color: '333333',
-          fontFace: 'Arial', valign: 'top'
+        slide2.addText(service.title, {
+          x: xPos + 0.2, y: yPos + 0.15, w: 4.1, h: 0.5,
+          fontSize: 14, bold: true, color: colorBlack,
+          fontFace: 'Arial'
+        });
+        slide2.addText(service.description, {
+          x: xPos + 0.2, y: yPos + 0.7, w: 4.1, h: 0.5,
+          fontSize: 11, color: '333333',
+          fontFace: 'Arial'
         });
       });
 
-      slide2.addShape(pptx.ShapeType.rect, {
-        x: 6, y: 4.2, w: 3.5, h: 1.2,
-        fill: { color: colorBurgundy }
-      });
-      slide2.addText('80+ млн', {
-        x: 6, y: 4.3, w: 3.5, h: 0.6,
-        fontSize: 42, bold: true, color: 'FFFFFF',
-        fontFace: 'Arial', align: 'center', valign: 'middle'
-      });
-      slide2.addText('активных потребителей', {
-        x: 6, y: 4.9, w: 3.5, h: 0.4,
-        fontSize: 16, color: 'FFFFFF',
-        fontFace: 'Arial', align: 'center', valign: 'middle'
-      });
-
-      // Slide 3: Regions
+      // Slide 3: Cities
       const slide3 = pptx.addSlide();
-      slide3.background = { color: colorGreen };
-      slide3.addText('Главный актив – регионы!', {
-        x: 0.5, y: 0.5, w: 9, h: 0.8,
-        fontSize: 42, bold: true, color: 'FFFFFF',
-        fontFace: 'Arial', align: 'center'
+      slide3.background = { color: colorBlack };
+      slide3.addText('МЫ ЗНАЕМ 80+ ГОРОДОВ РОССИИ', {
+        x: 0.5, y: 0.5, w: 9, h: 0.6,
+        fontSize: 36, bold: true, color: 'FFFFFF',
+        fontFace: 'Arial'
       });
-
-      cities.forEach((city, i) => {
-        const col = i % 4;
-        const row = Math.floor(i / 4);
-        const xPos = 0.4 + col * 2.4;
-        const yPos = 1.6 + row * 1.4;
-        
+      cities.forEach((city, idx) => {
+        const row = Math.floor(idx / 2);
+        const col = idx % 2;
+        const xPos = 0.5 + col * 4.75;
+        const yPos = 1.5 + row * 1.3;
         slide3.addShape(pptx.ShapeType.rect, {
-          x: xPos, y: yPos, w: 2.2, h: 1.1,
-          fill: { color: colorBlack, transparency: 30 }
+          x: xPos, y: yPos, w: 4.5, h: 1.1,
+          fill: { color: colorGreen, transparency: 20 }
         });
         slide3.addText(city.name, {
-          x: xPos, y: yPos + 0.15, w: 2.2, h: 0.4,
-          fontSize: 18, bold: true, color: 'FFFFFF',
-          fontFace: 'Arial', align: 'center'
-        });
-        slide3.addText(city.description, {
-          x: xPos + 0.1, y: yPos + 0.55, w: 2.0, h: 0.45,
-          fontSize: 10, color: 'DDDDDD',
-          fontFace: 'Arial', align: 'center'
-        });
-      });
-
-      slide3.addText('У каждого города России – свой культурный код и свой покупатель!', {
-        x: 0.5, y: 4.5, w: 9, h: 0.4,
-        fontSize: 18, bold: true, color: 'FFFFFF',
-        fontFace: 'Arial', align: 'center'
-      });
-
-      slide3.addText('Мы знаем эти города и их жителей, потому что работаем среди них и для них – более 19 лет!', {
-        x: 0.5, y: 5.0, w: 9, h: 0.4,
-        fontSize: 16, color: 'DDDDDD',
-        fontFace: 'Arial', align: 'center'
-      });
-
-      // Slide 4: Services
-      const slide4 = pptx.addSlide();
-      slide4.background = { color: colorCream };
-      slide4.addText('Centre digital & media', {
-        x: 1, y: 0.5, w: 8, h: 0.6,
-        fontSize: 36, bold: true, color: colorBlack,
-        fontFace: 'Arial', align: 'center'
-      });
-      slide4.addText('Ваш PR-мост в Россию', {
-        x: 1, y: 1.1, w: 8, h: 0.4,
-        fontSize: 18, color: '666666',
-        fontFace: 'Arial', align: 'center'
-      });
-
-      services.forEach((service, i) => {
-        const col = i % 2;
-        const row = Math.floor(i / 2);
-        const xPos = 0.5 + col * 4.8;
-        const yPos = 2.0 + row * 1.3;
-        
-        slide4.addShape(pptx.ShapeType.rect, {
-          x: xPos, y: yPos, w: 4.3, h: 1.1,
-          fill: { color: i % 2 === 0 ? colorBurgundy : colorGreen }
-        });
-        slide4.addText(service.title, {
-          x: xPos + 0.2, y: yPos + 0.15, w: 3.9, h: 0.4,
+          x: xPos + 0.2, y: yPos + 0.15, w: 4.1, h: 0.4,
           fontSize: 16, bold: true, color: 'FFFFFF',
           fontFace: 'Arial'
         });
-        slide4.addText(service.description, {
-          x: xPos + 0.2, y: yPos + 0.6, w: 3.9, h: 0.4,
-          fontSize: 12, color: 'EEEEEE',
+        slide3.addText(city.description, {
+          x: xPos + 0.2, y: yPos + 0.6, w: 4.1, h: 0.4,
+          fontSize: 11, color: 'CCCCCC',
           fontFace: 'Arial'
         });
       });
 
-      // Slide 5: Advantages
-      const slide5 = pptx.addSlide();
-      slide5.background = { color: colorBlack };
-      slide5.addText('Почему мы?', {
-        x: 1, y: 0.5, w: 8, h: 0.7,
-        fontSize: 42, bold: true, color: 'FFFFFF',
-        fontFace: 'Arial', align: 'center'
+      // Slide 4: Advantages
+      const slide4 = pptx.addSlide();
+      slide4.background = { color: colorCream };
+      slide4.addText('НАШИ ПРЕИМУЩЕСТВА', {
+        x: 0.5, y: 0.5, w: 9, h: 0.6,
+        fontSize: 36, bold: true, color: colorBlack,
+        fontFace: 'Arial'
       });
-
-      advantages.forEach((adv, i) => {
-        const col = i % 3;
-        const row = Math.floor(i / 3);
-        const xPos = 0.5 + col * 3.2;
-        const yPos = 1.7 + row * 1.6;
-        
-        slide5.addShape(pptx.ShapeType.rect, {
-          x: xPos, y: yPos, w: 3.0, h: 1.3,
-          fill: { color: colorBurgundy, transparency: 20 }
+      advantages.forEach((adv, idx) => {
+        const row = Math.floor(idx / 2);
+        const col = idx % 2;
+        const xPos = 0.5 + col * 4.75;
+        const yPos = 1.5 + row * 1.5;
+        slide4.addShape(pptx.ShapeType.rect, {
+          x: xPos, y: yPos, w: 4.5, h: 1.3,
+          fill: { color: colorGreen, transparency: 10 }
         });
-        slide5.addText(adv.title, {
-          x: xPos + 0.15, y: yPos + 0.2, w: 2.7, h: 0.5,
-          fontSize: 18, bold: true, color: 'FFFFFF',
-          fontFace: 'Arial', align: 'center'
-        });
-        slide5.addText(adv.text, {
-          x: xPos + 0.15, y: yPos + 0.75, w: 2.7, h: 0.4,
-          fontSize: 13, color: 'DDDDDD',
-          fontFace: 'Arial', align: 'center'
-        });
-      });
-
-      // Slides 6-15: Cases (10 cases)
-      cases.forEach((caseItem, index) => {
-        const slideCase = pptx.addSlide();
-        slideCase.background = { color: index % 2 === 0 ? colorCream : colorGreen };
-        const textColor = index % 2 === 0 ? colorBlack : 'FFFFFF';
-        const accentColor = index % 2 === 0 ? colorBurgundy : colorBlack;
-        
-        slideCase.addText(`Кейс ${index + 1}`, {
-          x: 0.5, y: 0.4, w: 2, h: 0.4,
-          fontSize: 16, bold: true, color: accentColor,
+        slide4.addText(adv.title, {
+          x: xPos + 0.2, y: yPos + 0.2, w: 4.1, h: 0.5,
+          fontSize: 16, bold: true, color: colorBlack,
           fontFace: 'Arial'
         });
-        
-        slideCase.addText(caseItem.title, {
-          x: 0.5, y: 0.9, w: 9, h: 0.8,
-          fontSize: 32, bold: true, color: textColor,
+        slide4.addText(adv.text, {
+          x: xPos + 0.2, y: yPos + 0.75, w: 4.1, h: 0.4,
+          fontSize: 12, color: '333333',
           fontFace: 'Arial'
         });
+      });
 
-        slideCase.addShape(pptx.ShapeType.rect, {
-          x: 0.5, y: 2.0, w: 9, h: 1.2,
-          fill: { color: accentColor, transparency: 10 }
+      // Slides 5-14: Cases (10 slides)
+      cases.forEach((caseItem, idx) => {
+        const slide = pptx.addSlide();
+        slide.background = { color: idx % 2 === 0 ? colorBlack : colorCream };
+        const textColor = idx % 2 === 0 ? 'FFFFFF' : colorBlack;
+        const accentColor = idx % 2 === 0 ? colorBurgundy : colorGreen;
+
+        slide.addText(`КЕЙС ${idx + 1}`, {
+          x: 0.5, y: 0.5, w: 9, h: 0.5,
+          fontSize: 20, bold: true, color: accentColor,
+          fontFace: 'Arial'
         });
-        slideCase.addText('Задача:', {
-          x: 0.7, y: 2.1, w: 8.6, h: 0.3,
+        slide.addText(caseItem.title, {
+          x: 0.5, y: 1.2, w: 9, h: 0.8,
+          fontSize: 28, bold: true, color: textColor,
+          fontFace: 'Arial'
+        });
+        slide.addText('ЗАДАЧА', {
+          x: 0.5, y: 2.3, w: 9, h: 0.3,
           fontSize: 14, bold: true, color: accentColor,
           fontFace: 'Arial'
         });
-        slideCase.addText(caseItem.task, {
-          x: 0.7, y: 2.45, w: 8.6, h: 0.6,
+        slide.addText(caseItem.task, {
+          x: 0.5, y: 2.7, w: 9, h: 0.6,
           fontSize: 13, color: textColor,
           fontFace: 'Arial'
         });
-
-        if (caseItem.solution) {
-          slideCase.addShape(pptx.ShapeType.rect, {
-            x: 0.5, y: 3.4, w: 9, h: 1.2,
-            fill: { color: accentColor, transparency: 10 }
-          });
-          slideCase.addText('Решение:', {
-            x: 0.7, y: 3.5, w: 8.6, h: 0.3,
-            fontSize: 14, bold: true, color: accentColor,
-            fontFace: 'Arial'
-          });
-          slideCase.addText(caseItem.solution, {
-            x: 0.7, y: 3.85, w: 8.6, h: 0.6,
-            fontSize: 13, color: textColor,
-            fontFace: 'Arial'
-          });
-        }
-
-        slideCase.addShape(pptx.ShapeType.rect, {
-          x: 0.5, y: 4.8, w: 9, h: 0.8,
-          fill: { color: accentColor }
-        });
-        slideCase.addText('Результат:', {
-          x: 0.7, y: 4.9, w: 8.6, h: 0.3,
-          fontSize: 14, bold: true, color: 'FFFFFF',
+        slide.addText('РЕШЕНИЕ', {
+          x: 0.5, y: 3.5, w: 9, h: 0.3,
+          fontSize: 14, bold: true, color: accentColor,
           fontFace: 'Arial'
         });
-        slideCase.addText(caseItem.result, {
-          x: 0.7, y: 5.2, w: 8.6, h: 0.4,
-          fontSize: 13, color: 'FFFFFF',
+        slide.addText(caseItem.solution, {
+          x: 0.5, y: 3.9, w: 9, h: 0.7,
+          fontSize: 13, color: textColor,
+          fontFace: 'Arial'
+        });
+        slide.addText('РЕЗУЛЬТАТ', {
+          x: 0.5, y: 4.8, w: 9, h: 0.3,
+          fontSize: 14, bold: true, color: accentColor,
+          fontFace: 'Arial'
+        });
+        slide.addText(caseItem.result, {
+          x: 0.5, y: 5.2, w: 9, h: 0.7,
+          fontSize: 13, color: textColor,
           fontFace: 'Arial'
         });
       });
 
-      // Slide 16: Problems & Solutions
+      // Slide 15: Market Opportunity
+      const slide15 = pptx.addSlide();
+      slide15.background = { color: colorBlack };
+      slide15.addText('ПОЧЕМУ РОССИЯ – ЭТО ВОЗМОЖНОСТЬ', {
+        x: 0.5, y: 0.5, w: 9, h: 0.6,
+        fontSize: 32, bold: true, color: 'FFFFFF',
+        fontFace: 'Arial'
+      });
+      marketPoints.forEach((point, idx) => {
+        slide15.addText(`${idx + 1}`, {
+          x: 0.7, y: 1.7 + idx * 1, w: 0.5, h: 0.5,
+          fontSize: 24, bold: true, color: colorBurgundy,
+          fontFace: 'Arial', align: 'center', valign: 'middle'
+        });
+        slide15.addText(point, {
+          x: 1.5, y: 1.7 + idx * 1, w: 7.5, h: 0.8,
+          fontSize: 14, color: 'FFFFFF',
+          fontFace: 'Arial', valign: 'middle'
+        });
+      });
+
+      // Slide 16: Problems vs Solutions
       const slide16 = pptx.addSlide();
       slide16.background = { color: colorCream };
-      slide16.addText('Проблемы и решения', {
-        x: 0.5, y: 0.4, w: 9, h: 0.7,
-        fontSize: 36, bold: true, color: colorBlack,
-        fontFace: 'Arial', align: 'center'
+      slide16.addText('ПРОБЛЕМЫ И РЕШЕНИЯ', {
+        x: 0.5, y: 0.5, w: 9, h: 0.6,
+        fontSize: 32, bold: true, color: colorBlack,
+        fontFace: 'Arial'
       });
-
-      slide16.addShape(pptx.ShapeType.rect, {
-        x: 0.5, y: 1.3, w: 4.3, h: 0.5,
-        fill: { color: colorBurgundy }
+      slide16.addText('БЕЗ НАС', {
+        x: 0.5, y: 1.3, w: 4.5, h: 0.4,
+        fontSize: 18, bold: true, color: colorBurgundy,
+        fontFace: 'Arial'
       });
-      slide16.addText('Проблемы входа на рынок:', {
-        x: 0.5, y: 1.3, w: 4.3, h: 0.5,
-        fontSize: 16, bold: true, color: 'FFFFFF',
-        fontFace: 'Arial', align: 'center', valign: 'middle'
+      slide16.addText('С НАМИ', {
+        x: 5.3, y: 1.3, w: 4.5, h: 0.4,
+        fontSize: 18, bold: true, color: colorGreen,
+        fontFace: 'Arial'
       });
-
-      problems.forEach((problem, i) => {
-        slide16.addText('●', {
-          x: 0.6, y: 2.0 + i * 0.45, w: 0.2, h: 0.3,
-          fontSize: 12, color: colorBurgundy
+      problems.forEach((problem, idx) => {
+        slide16.addText(`${idx + 1}. ${problem}`, {
+          x: 0.5, y: 1.9 + idx * 0.65, w: 4.3, h: 0.6,
+          fontSize: 11, color: '333333',
+          fontFace: 'Arial'
         });
-        slide16.addText(problem, {
-          x: 0.9, y: 2.0 + i * 0.45, w: 3.7, h: 0.4,
+      });
+      solutions.forEach((solution, idx) => {
+        slide16.addText(`${idx + 1}. ${solution}`, {
+          x: 5.3, y: 1.9 + idx * 0.65, w: 4.3, h: 0.6,
           fontSize: 11, color: '333333',
           fontFace: 'Arial'
         });
       });
 
-      slide16.addShape(pptx.ShapeType.rect, {
-        x: 5.2, y: 1.3, w: 4.3, h: 0.5,
-        fill: { color: colorGreen }
-      });
-      slide16.addText('Наши решения:', {
-        x: 5.2, y: 1.3, w: 4.3, h: 0.5,
-        fontSize: 16, bold: true, color: 'FFFFFF',
-        fontFace: 'Arial', align: 'center', valign: 'middle'
-      });
-
-      solutions.forEach((solution, i) => {
-        slide16.addText('●', {
-          x: 5.3, y: 2.0 + i * 0.45, w: 0.2, h: 0.3,
-          fontSize: 12, color: colorGreen
-        });
-        slide16.addText(solution, {
-          x: 5.6, y: 2.0 + i * 0.45, w: 3.7, h: 0.4,
-          fontSize: 11, color: '333333',
-          fontFace: 'Arial'
-        });
-      });
-
-      slide16.addShape(pptx.ShapeType.rect, {
-        x: 1.5, y: 5.0, w: 7, h: 0.6,
-        fill: { color: colorBurgundy, transparency: 20 }
-      });
-      slide16.addText('Мы превращаем барьеры в возможности!', {
-        x: 1.5, y: 5.0, w: 7, h: 0.6,
-        fontSize: 18, bold: true, color: colorBlack,
-        fontFace: 'Arial', align: 'center', valign: 'middle'
-      });
-
-      // Slide 17: Contact
+      // Slide 17: Final CTA
       const slide17 = pptx.addSlide();
       slide17.background = { color: colorBlack };
-      slide17.addText('Готовы начать?', {
-        x: 1, y: 1.5, w: 8, h: 1,
+      slide17.addText('ДАВАЙТЕ ВМЕСТЕ', {
+        x: 1, y: 2, w: 8, h: 0.8,
         fontSize: 48, bold: true, color: 'FFFFFF',
-        fontFace: 'Arial', align: 'center'
+        fontFace: 'Arial', align: 'center', valign: 'middle'
       });
-      slide17.addText('Свяжитесь с нами для консультации', {
+      slide17.addText('ВЫВЕДЕМ ВАШ БРЕНД НА РОССИЙСКИЙ РЫНОК', {
         x: 1, y: 2.8, w: 8, h: 0.6,
-        fontSize: 22, color: 'CCCCCC',
-        fontFace: 'Arial', align: 'center'
+        fontSize: 24, color: 'CCCCCC',
+        fontFace: 'Arial', align: 'center', valign: 'middle'
       });
       slide17.addShape(pptx.ShapeType.rect, {
-        x: 2.5, y: 3.8, w: 5, h: 0.8,
+        x: 2.5, y: 4, w: 5, h: 0.8,
         fill: { color: colorBurgundy }
       });
+      slide17.addText('Свяжитесь с нами', {
+        x: 2.5, y: 4, w: 5, h: 0.8,
+        fontSize: 20, bold: true, color: 'FFFFFF',
+        fontFace: 'Arial', align: 'center', valign: 'middle'
+      });
       slide17.addText('Centre digital & media', {
-        x: 2.5, y: 3.8, w: 5, h: 0.8,
-        fontSize: 24, bold: true, color: 'FFFFFF',
+        x: 1, y: 5.2, w: 8, h: 0.5,
+        fontSize: 18, color: 'CCCCCC',
         fontFace: 'Arial', align: 'center', valign: 'middle'
       });
 
@@ -523,209 +442,404 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-cream">
-      <div className="fixed top-4 right-4 z-50 flex gap-2">
-        <Button
-          onClick={exportToPDF}
-          disabled={isExporting}
-          variant="outline"
-          className="bg-white shadow-lg hover:bg-gray-50"
-        >
-          <Icon name="Download" className="mr-2 h-4 w-4" />
-          {isExporting ? 'Экспорт...' : 'PDF'}
-        </Button>
-        <Button
-          onClick={exportToPPTX}
-          disabled={isExporting}
-          className="bg-burgundy text-white shadow-lg hover:bg-burgundy/90"
-        >
-          <Icon name="Download" className="mr-2 h-4 w-4" />
-          {isExporting ? 'Экспорт...' : 'PPTX'}
-        </Button>
-      </div>
-
-      {/* Slide 1: Title */}
-      <div className="slide h-screen flex items-center justify-center bg-dark-gray text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-64 h-64 bg-burgundy rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-forest-green rounded-full blur-3xl"></div>
-        </div>
-        <div className="relative z-10 text-center px-8 max-w-4xl">
-          <h1 className="text-7xl font-bold mb-6 leading-tight">
-            Ваш надежный<br />PR-партнер
-          </h1>
-          <p className="text-3xl text-gray-300 mb-12">для выхода в Россию</p>
-          <div className="bg-burgundy/20 backdrop-blur-sm px-8 py-4 rounded-lg inline-block">
-            <p className="text-xl">Полный цикл услуг для продвижения бренда в регионах</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Slide 2: Market */}
-      <div className="slide h-screen flex items-center justify-center bg-cream p-16">
-        <div className="max-w-7xl w-full grid grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-5xl font-bold text-dark-gray mb-8">Российский рынок сегодня</h2>
-            <div className="space-y-4">
-              {marketPoints.map((point, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-burgundy rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-lg text-gray-700">{point}</p>
-                </div>
-              ))}
+    <div className="min-h-screen bg-gradient-to-br from-[#FAF8F5] via-[#F5F3F0] to-[#FAF8F5] font-[system-ui,-apple-system,'Inter',sans-serif]">
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#1A1A1A]/95 via-[#2A2A2A]/95 to-[#1A1A1A]/95 backdrop-blur-lg shadow-2xl border-b border-white/10">
+        <div className="container mx-auto px-8 py-6 flex justify-between items-center">
+          <div className="flex flex-col">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#6B2C2C] to-[#541F1F] flex items-center justify-center shadow-lg">
+                <span className="text-2xl font-black text-white">C</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-black bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent tracking-tight">
+                  Centre digital & media
+                </h1>
+                <p className="text-sm font-light text-gray-400 tracking-wide">Ваш PR-партнер в России</p>
+              </div>
             </div>
           </div>
-          <div className="flex items-center justify-center">
-            <div className="bg-burgundy text-white p-12 rounded-2xl text-center shadow-2xl">
-              <div className="text-7xl font-bold mb-4">80+ млн</div>
-              <p className="text-2xl">активных потребителей</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Slide 3: Regions */}
-      <div className="slide h-screen flex flex-col items-center justify-center bg-forest-green text-white p-16">
-        <h2 className="text-6xl font-bold mb-12 text-center">Главный актив – регионы!</h2>
-        <div className="grid grid-cols-4 gap-6 max-w-6xl mb-8">
-          {cities.map((city, index) => (
-            <div key={index} className="bg-dark-gray/30 backdrop-blur-sm p-6 rounded-lg text-center hover:bg-dark-gray/50 transition-all">
-              <h3 className="text-xl font-bold mb-2">{city.name}</h3>
-              <p className="text-sm text-gray-200">{city.description}</p>
-            </div>
-          ))}
-        </div>
-        <div className="text-center mt-8 space-y-3">
-          <p className="text-2xl font-bold">У каждого города России – свой культурный код и свой покупатель!</p>
-          <p className="text-xl text-gray-200">Мы знаем эти города и их жителей, потому что работаем среди них и для них – более 19 лет!</p>
-        </div>
-      </div>
-
-      {/* Slide 4: Services */}
-      <div className="slide h-screen flex flex-col items-center justify-center bg-cream p-16">
-        <h2 className="text-5xl font-bold text-dark-gray mb-3 text-center">Centre digital & media</h2>
-        <p className="text-2xl text-gray-600 mb-12 text-center">Ваш PR-мост в Россию</p>
-        <div className="grid grid-cols-2 gap-6 max-w-5xl">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              className={`p-6 rounded-lg text-white ${
-                index % 2 === 0 ? 'bg-burgundy' : 'bg-forest-green'
-              }`}
+          <div className="flex gap-4">
+            <Button
+              onClick={exportToPDF}
+              disabled={isExporting}
+              className="px-8 py-6 text-base font-bold bg-gradient-to-r from-[#6B2C2C] to-[#541F1F] hover:from-[#7B3C3C] hover:to-[#642F2F] text-white rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 disabled:opacity-50"
             >
-              <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-              <p className="text-sm opacity-90">{service.description}</p>
-            </div>
-          ))}
+              <Icon name="download" className="w-5 h-5 mr-3" />
+              Скачать PDF
+            </Button>
+            <Button
+              onClick={exportToPPTX}
+              disabled={isExporting}
+              className="px-8 py-6 text-base font-bold bg-gradient-to-r from-[#2F5745] to-[#1F3A2E] hover:from-[#3F6755] hover:to-[#2F4A3E] text-white rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 disabled:opacity-50"
+            >
+              <Icon name="presentation" className="w-5 h-5 mr-3" />
+              Скачать PPTX
+            </Button>
+          </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Slide 5: Advantages */}
-      <div className="slide h-screen flex flex-col items-center justify-center bg-dark-gray text-white p-16">
-        <h2 className="text-6xl font-bold mb-16 text-center">Почему мы?</h2>
-        <div className="grid grid-cols-3 gap-8 max-w-6xl">
-          {advantages.map((adv, index) => (
-            <div key={index} className="bg-burgundy/20 backdrop-blur-sm p-8 rounded-lg text-center hover:bg-burgundy/30 transition-all">
-              <h3 className="text-2xl font-bold mb-4">{adv.title}</h3>
-              <p className="text-gray-200">{adv.text}</p>
+      {/* Slides Container */}
+      <div className="pt-32 pb-20 space-y-8">
+        {/* Slide 1: Hero */}
+        <div className="slide min-h-[600px] mx-auto max-w-7xl relative overflow-hidden rounded-[2rem] shadow-2xl bg-gradient-to-br from-[#1A1A1A] via-[#2A2A2A] to-[#1A1A1A]">
+          {/* Animated Background Orbs */}
+          <div className="absolute top-20 left-20 w-96 h-96 bg-[#6B2C2C] rounded-full blur-[120px] opacity-20 animate-pulse" style={{ animationDelay: '0s' }}></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-[#2F5745] rounded-full blur-[120px] opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
+          
+          <div className="relative z-10 flex flex-col items-center justify-center min-h-[600px] px-16 py-20">
+            <div className="inline-block px-8 py-3 mb-8 bg-gradient-to-r from-[#6B2C2C]/30 to-[#2F5745]/30 backdrop-blur-md rounded-full border border-white/20">
+              <span className="text-base font-light text-white/90 tracking-widest uppercase">Профессиональное агентство</span>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Slides 6-15: Cases */}
-      {cases.map((caseItem, index) => (
-        <div
-          key={index}
-          className={`slide h-screen flex flex-col justify-center p-16 ${
-            index % 2 === 0 ? 'bg-cream' : 'bg-forest-green text-white'
-          }`}
-        >
-          <div className="max-w-5xl mx-auto w-full">
-            <div className={`text-sm font-bold mb-4 ${index % 2 === 0 ? 'text-burgundy' : 'text-white'}`}>
-              Кейс {index + 1}
-            </div>
-            <h2 className={`text-5xl font-bold mb-12 ${index % 2 === 0 ? 'text-dark-gray' : 'text-white'}`}>
-              {caseItem.title}
-            </h2>
             
-            <div className={`p-6 rounded-lg mb-6 ${index % 2 === 0 ? 'bg-burgundy/10' : 'bg-dark-gray/30'}`}>
-              <h3 className={`text-xl font-bold mb-3 ${index % 2 === 0 ? 'text-burgundy' : 'text-white'}`}>
-                Задача:
-              </h3>
-              <p className={`text-lg ${index % 2 === 0 ? 'text-gray-700' : 'text-gray-200'}`}>
-                {caseItem.task}
-              </p>
-            </div>
-
-            {caseItem.solution && (
-              <div className={`p-6 rounded-lg mb-6 ${index % 2 === 0 ? 'bg-burgundy/10' : 'bg-dark-gray/30'}`}>
-                <h3 className={`text-xl font-bold mb-3 ${index % 2 === 0 ? 'text-burgundy' : 'text-white'}`}>
-                  Решение:
-                </h3>
-                <p className={`text-lg ${index % 2 === 0 ? 'text-gray-700' : 'text-gray-200'}`}>
-                  {caseItem.solution}
+            <h1 className="text-8xl font-black text-center mb-8 leading-tight tracking-tight">
+              <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+                Ваш надежный
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-[#6B2C2C] via-[#8B4C4C] to-[#6B2C2C] bg-clip-text text-transparent">
+                PR-партнер
+              </span>
+            </h1>
+            
+            <p className="text-3xl font-light text-gray-300 text-center mb-16 tracking-wide">
+              для выхода в Россию
+            </p>
+            
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-[#6B2C2C] to-[#541F1F] rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-all duration-300"></div>
+              <div className="relative bg-gradient-to-r from-[#6B2C2C] via-[#7B3C3C] to-[#541F1F] backdrop-blur-md rounded-2xl px-16 py-10 border border-white/20 shadow-2xl">
+                <div className="text-7xl font-black text-white mb-4 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+                  85%
+                </div>
+                <div className="w-24 h-1 bg-gradient-to-r from-white/50 to-transparent mx-auto mb-4"></div>
+                <p className="text-xl font-light text-white/90 text-center leading-relaxed">
+                  клиентов превышают KPI благодаря<br />глубокой локализации
                 </p>
               </div>
-            )}
-
-            <div className={`p-6 rounded-lg ${index % 2 === 0 ? 'bg-burgundy' : 'bg-dark-gray'} text-white`}>
-              <h3 className="text-xl font-bold mb-3">Результат:</h3>
-              <p className="text-lg">{caseItem.result}</p>
             </div>
           </div>
         </div>
-      ))}
 
-      {/* Slide 16: Problems & Solutions */}
-      <div className="slide h-screen flex flex-col items-center justify-center bg-cream p-16">
-        <h2 className="text-5xl font-bold text-dark-gray mb-12 text-center">Проблемы и решения</h2>
-        <div className="grid grid-cols-2 gap-12 max-w-6xl w-full">
-          <div>
-            <div className="bg-burgundy text-white p-4 rounded-t-lg mb-6">
-              <h3 className="text-2xl font-bold text-center">Проблемы входа на рынок:</h3>
+        {/* Slide 2: Services */}
+        <div className="slide min-h-[600px] mx-auto max-w-7xl relative overflow-hidden rounded-[2rem] shadow-2xl bg-gradient-to-br from-[#FAF8F5] via-[#F5F3F0] to-[#FAF8F5]">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#6B2C2C] rounded-full blur-[120px] opacity-10 animate-pulse" style={{ animationDelay: '1s' }}></div>
+          
+          <div className="relative z-10 px-16 py-16">
+            <div className="mb-16">
+              <div className="inline-block px-6 py-2 mb-6 bg-gradient-to-r from-[#6B2C2C]/20 to-[#6B2C2C]/10 rounded-full">
+                <span className="text-sm font-bold text-[#6B2C2C] tracking-wider uppercase">Что мы предлагаем</span>
+              </div>
+              <h2 className="text-6xl font-black bg-gradient-to-r from-[#1A1A1A] to-[#4A4A4A] bg-clip-text text-transparent tracking-tight">
+                УСЛУГИ
+              </h2>
             </div>
-            <div className="space-y-4">
-              {problems.map((problem, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-burgundy rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-lg text-gray-700">{problem}</p>
+            
+            <div className="grid grid-cols-2 gap-8">
+              {services.map((service, index) => (
+                <div
+                  key={index}
+                  className={`group p-10 rounded-2xl border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
+                    index % 2 === 0
+                      ? 'bg-gradient-to-br from-[#6B2C2C]/15 via-[#6B2C2C]/10 to-transparent'
+                      : 'bg-gradient-to-br from-[#2F5745]/15 via-[#2F5745]/10 to-transparent'
+                  }`}
+                >
+                  <h3 className={`text-xl font-black mb-4 tracking-tight leading-tight ${
+                    index % 2 === 0 ? 'text-[#6B2C2C]' : 'text-[#2F5745]'
+                  }`}>
+                    {service.title}
+                  </h3>
+                  <p className="text-base font-light text-gray-700 leading-relaxed">
+                    {service.description}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
-          <div>
-            <div className="bg-forest-green text-white p-4 rounded-t-lg mb-6">
-              <h3 className="text-2xl font-bold text-center">Наши решения:</h3>
+        </div>
+
+        {/* Slide 3: Cities */}
+        <div className="slide min-h-[600px] mx-auto max-w-7xl relative overflow-hidden rounded-[2rem] shadow-2xl bg-gradient-to-br from-[#1A1A1A] via-[#2A2A2A] to-[#1A1A1A]">
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#2F5745] rounded-full blur-[120px] opacity-20 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+          
+          <div className="relative z-10 px-16 py-16">
+            <div className="mb-16">
+              <div className="inline-block px-6 py-2 mb-6 bg-gradient-to-r from-[#2F5745]/30 to-[#2F5745]/20 rounded-full border border-white/10">
+                <span className="text-sm font-bold text-[#2F5745] tracking-wider uppercase">География работы</span>
+              </div>
+              <h2 className="text-6xl font-black text-white tracking-tight mb-4">
+                МЫ ЗНАЕМ 80+ ГОРОДОВ РОССИИ
+              </h2>
+              <p className="text-xl font-light text-gray-400 tracking-wide">
+                От промышленных центров до культурных столиц
+              </p>
             </div>
-            <div className="space-y-4">
-              {solutions.map((solution, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-forest-green rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-lg text-gray-700">{solution}</p>
+            
+            <div className="grid grid-cols-2 gap-6">
+              {cities.map((city, index) => (
+                <div
+                  key={index}
+                  className="group p-8 rounded-2xl bg-gradient-to-br from-[#2F5745]/25 via-[#2F5745]/15 to-transparent backdrop-blur-md border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                >
+                  <h3 className="text-2xl font-black text-white mb-3 group-hover:text-[#2F5745] transition-colors duration-300">
+                    {city.name}
+                  </h3>
+                  <p className="text-base font-light text-gray-300 leading-relaxed">
+                    {city.description}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <div className="mt-12 bg-burgundy/20 px-8 py-4 rounded-lg">
-          <p className="text-2xl font-bold text-dark-gray text-center">
-            Мы превращаем барьеры в возможности!
-          </p>
-        </div>
-      </div>
 
-      {/* Slide 17: Contact */}
-      <div className="slide h-screen flex items-center justify-center bg-dark-gray text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-burgundy rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-forest-green rounded-full blur-3xl"></div>
+        {/* Slide 4: Advantages */}
+        <div className="slide min-h-[600px] mx-auto max-w-7xl relative overflow-hidden rounded-[2rem] shadow-2xl bg-gradient-to-br from-[#FAF8F5] via-[#F5F3F0] to-[#FAF8F5]">
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#2F5745] rounded-full blur-[120px] opacity-10 animate-pulse"></div>
+          
+          <div className="relative z-10 px-16 py-16">
+            <div className="mb-16">
+              <div className="inline-block px-6 py-2 mb-6 bg-gradient-to-r from-[#2F5745]/20 to-[#2F5745]/10 rounded-full">
+                <span className="text-sm font-bold text-[#2F5745] tracking-wider uppercase">Почему выбирают нас</span>
+              </div>
+              <h2 className="text-6xl font-black bg-gradient-to-r from-[#1A1A1A] to-[#4A4A4A] bg-clip-text text-transparent tracking-tight">
+                НАШИ ПРЕИМУЩЕСТВА
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-8">
+              {advantages.map((advantage, index) => (
+                <div
+                  key={index}
+                  className="group p-10 rounded-2xl bg-gradient-to-br from-[#2F5745]/15 via-[#2F5745]/10 to-transparent backdrop-blur-sm border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                >
+                  <h3 className="text-2xl font-black text-[#2F5745] mb-4 tracking-tight">
+                    {advantage.title}
+                  </h3>
+                  <p className="text-base font-light text-gray-700 leading-relaxed">
+                    {advantage.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="relative z-10 text-center">
-          <h2 className="text-6xl font-bold mb-8">Готовы начать?</h2>
-          <p className="text-3xl text-gray-300 mb-12">Свяжитесь с нами для консультации</p>
-          <div className="bg-burgundy px-12 py-6 rounded-lg inline-block">
-            <p className="text-3xl font-bold">Centre digital & media</p>
+
+        {/* Slides 5-14: Cases */}
+        {cases.map((caseItem, index) => (
+          <div
+            key={index}
+            className={`slide min-h-[600px] mx-auto max-w-7xl relative overflow-hidden rounded-[2rem] shadow-2xl ${
+              index % 2 === 0
+                ? 'bg-gradient-to-br from-[#1A1A1A] via-[#2A2A2A] to-[#1A1A1A]'
+                : 'bg-gradient-to-br from-[#FAF8F5] via-[#F5F3F0] to-[#FAF8F5]'
+            }`}
+          >
+            <div className={`absolute ${index % 2 === 0 ? 'top-20 right-20' : 'bottom-20 left-20'} w-[500px] h-[500px] ${
+              index % 2 === 0 ? 'bg-[#6B2C2C]' : 'bg-[#2F5745]'
+            } rounded-full blur-[120px] opacity-${index % 2 === 0 ? '20' : '10'} animate-pulse`}></div>
+            
+            <div className="relative z-10 px-16 py-16">
+              <div className={`inline-block px-6 py-2 mb-8 rounded-full ${
+                index % 2 === 0
+                  ? 'bg-gradient-to-r from-[#6B2C2C]/30 to-[#6B2C2C]/20 border border-white/10'
+                  : 'bg-gradient-to-r from-[#2F5745]/20 to-[#2F5745]/10'
+              }`}>
+                <span className={`text-sm font-bold tracking-wider uppercase ${
+                  index % 2 === 0 ? 'text-[#6B2C2C]' : 'text-[#2F5745]'
+                }`}>
+                  КЕЙС {index + 1}
+                </span>
+              </div>
+              
+              <h2 className={`text-5xl font-black mb-12 leading-tight tracking-tight ${
+                index % 2 === 0 ? 'text-white' : 'bg-gradient-to-r from-[#1A1A1A] to-[#4A4A4A] bg-clip-text text-transparent'
+              }`}>
+                {caseItem.title}
+              </h2>
+              
+              <div className="space-y-8">
+                <div className={`p-8 rounded-2xl backdrop-blur-md ${
+                  index % 2 === 0
+                    ? 'bg-white/5 border border-white/10'
+                    : 'bg-[#2F5745]/10 border border-[#2F5745]/20'
+                }`}>
+                  <h3 className={`text-xl font-black mb-4 tracking-wider uppercase ${
+                    index % 2 === 0 ? 'text-[#6B2C2C]' : 'text-[#2F5745]'
+                  }`}>
+                    ЗАДАЧА
+                  </h3>
+                  <p className={`text-lg font-light leading-relaxed ${
+                    index % 2 === 0 ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
+                    {caseItem.task}
+                  </p>
+                </div>
+                
+                <div className={`p-8 rounded-2xl backdrop-blur-md ${
+                  index % 2 === 0
+                    ? 'bg-white/5 border border-white/10'
+                    : 'bg-[#2F5745]/10 border border-[#2F5745]/20'
+                }`}>
+                  <h3 className={`text-xl font-black mb-4 tracking-wider uppercase ${
+                    index % 2 === 0 ? 'text-[#6B2C2C]' : 'text-[#2F5745]'
+                  }`}>
+                    РЕШЕНИЕ
+                  </h3>
+                  <p className={`text-lg font-light leading-relaxed ${
+                    index % 2 === 0 ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
+                    {caseItem.solution}
+                  </p>
+                </div>
+                
+                <div className={`p-8 rounded-2xl backdrop-blur-md ${
+                  index % 2 === 0
+                    ? 'bg-gradient-to-br from-[#6B2C2C]/20 to-[#6B2C2C]/10 border border-[#6B2C2C]/30'
+                    : 'bg-gradient-to-br from-[#2F5745]/20 to-[#2F5745]/10 border border-[#2F5745]/30'
+                }`}>
+                  <h3 className={`text-xl font-black mb-4 tracking-wider uppercase ${
+                    index % 2 === 0 ? 'text-[#6B2C2C]' : 'text-[#2F5745]'
+                  }`}>
+                    РЕЗУЛЬТАТ
+                  </h3>
+                  <p className={`text-lg font-light leading-relaxed ${
+                    index % 2 === 0 ? 'text-white' : 'text-gray-800'
+                  }`}>
+                    {caseItem.result}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Slide 15: Market Opportunity */}
+        <div className="slide min-h-[600px] mx-auto max-w-7xl relative overflow-hidden rounded-[2rem] shadow-2xl bg-gradient-to-br from-[#1A1A1A] via-[#2A2A2A] to-[#1A1A1A]">
+          <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#6B2C2C] rounded-full blur-[120px] opacity-20 animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#2F5745] rounded-full blur-[120px] opacity-15 animate-pulse" style={{ animationDelay: '2s' }}></div>
+          
+          <div className="relative z-10 px-16 py-16">
+            <div className="mb-16">
+              <div className="inline-block px-6 py-2 mb-6 bg-gradient-to-r from-[#6B2C2C]/30 to-[#2F5745]/30 rounded-full border border-white/10">
+                <span className="text-sm font-bold text-white tracking-wider uppercase">Рыночные перспективы</span>
+              </div>
+              <h2 className="text-6xl font-black text-white tracking-tight leading-tight">
+                ПОЧЕМУ РОССИЯ –<br />ЭТО ВОЗМОЖНОСТЬ
+              </h2>
+            </div>
+            
+            <div className="space-y-8">
+              {marketPoints.map((point, index) => (
+                <div
+                  key={index}
+                  className="group flex items-start gap-8 p-8 rounded-2xl bg-gradient-to-r from-white/5 to-transparent backdrop-blur-md border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.02] shadow-xl"
+                >
+                  <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-[#6B2C2C] to-[#541F1F] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-3xl font-black text-white">{index + 1}</span>
+                  </div>
+                  <p className="flex-1 text-xl font-light text-white leading-relaxed pt-3">
+                    {point}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Slide 16: Problems vs Solutions */}
+        <div className="slide min-h-[600px] mx-auto max-w-7xl relative overflow-hidden rounded-[2rem] shadow-2xl bg-gradient-to-br from-[#FAF8F5] via-[#F5F3F0] to-[#FAF8F5]">
+          <div className="absolute top-20 left-20 w-[400px] h-[400px] bg-[#6B2C2C] rounded-full blur-[120px] opacity-10 animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-[400px] h-[400px] bg-[#2F5745] rounded-full blur-[120px] opacity-10 animate-pulse" style={{ animationDelay: '1s' }}></div>
+          
+          <div className="relative z-10 px-16 py-16">
+            <div className="mb-16">
+              <div className="inline-block px-6 py-2 mb-6 bg-gradient-to-r from-[#6B2C2C]/20 via-[#2F5745]/20 to-[#6B2C2C]/20 rounded-full">
+                <span className="text-sm font-bold bg-gradient-to-r from-[#6B2C2C] to-[#2F5745] bg-clip-text text-transparent tracking-wider uppercase">Сравнение</span>
+              </div>
+              <h2 className="text-6xl font-black bg-gradient-to-r from-[#1A1A1A] to-[#4A4A4A] bg-clip-text text-transparent tracking-tight">
+                ПРОБЛЕМЫ И РЕШЕНИЯ
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-12">
+              <div>
+                <div className="mb-8 p-6 rounded-2xl bg-gradient-to-br from-[#6B2C2C]/20 to-[#6B2C2C]/10 border border-[#6B2C2C]/20">
+                  <h3 className="text-3xl font-black text-[#6B2C2C] tracking-tight">БЕЗ НАС</h3>
+                </div>
+                <div className="space-y-4">
+                  {problems.map((problem, index) => (
+                    <div key={index} className="group p-6 rounded-xl bg-gradient-to-r from-[#6B2C2C]/10 to-transparent border border-[#6B2C2C]/20 hover:border-[#6B2C2C]/40 transition-all duration-300 hover:scale-[1.02] shadow-md">
+                      <div className="flex items-start gap-4">
+                        <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#6B2C2C]/20 flex items-center justify-center text-sm font-bold text-[#6B2C2C]">
+                          {index + 1}
+                        </span>
+                        <p className="flex-1 text-base font-light text-gray-700 leading-relaxed pt-1">
+                          {problem}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <div className="mb-8 p-6 rounded-2xl bg-gradient-to-br from-[#2F5745]/20 to-[#2F5745]/10 border border-[#2F5745]/20">
+                  <h3 className="text-3xl font-black text-[#2F5745] tracking-tight">С НАМИ</h3>
+                </div>
+                <div className="space-y-4">
+                  {solutions.map((solution, index) => (
+                    <div key={index} className="group p-6 rounded-xl bg-gradient-to-r from-[#2F5745]/10 to-transparent border border-[#2F5745]/20 hover:border-[#2F5745]/40 transition-all duration-300 hover:scale-[1.02] shadow-md">
+                      <div className="flex items-start gap-4">
+                        <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#2F5745]/20 flex items-center justify-center text-sm font-bold text-[#2F5745]">
+                          {index + 1}
+                        </span>
+                        <p className="flex-1 text-base font-light text-gray-700 leading-relaxed pt-1">
+                          {solution}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Slide 17: Final CTA */}
+        <div className="slide min-h-[600px] mx-auto max-w-7xl relative overflow-hidden rounded-[2rem] shadow-2xl bg-gradient-to-br from-[#1A1A1A] via-[#2A2A2A] to-[#1A1A1A]">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-[#6B2C2C] via-[#2F5745] to-[#6B2C2C] rounded-full blur-[150px] opacity-20 animate-pulse"></div>
+          
+          <div className="relative z-10 flex flex-col items-center justify-center min-h-[600px] px-16 py-20 text-center">
+            <div className="inline-block px-8 py-3 mb-12 bg-gradient-to-r from-[#6B2C2C]/30 via-[#2F5745]/30 to-[#6B2C2C]/30 backdrop-blur-md rounded-full border border-white/20">
+              <span className="text-base font-light text-white/90 tracking-widest uppercase">Готовы начать?</span>
+            </div>
+            
+            <h1 className="text-7xl font-black text-white mb-8 leading-tight tracking-tight">
+              ДАВАЙТЕ ВМЕСТЕ
+            </h1>
+            
+            <p className="text-3xl font-light bg-gradient-to-r from-gray-300 via-white to-gray-300 bg-clip-text text-transparent mb-16 leading-relaxed tracking-wide">
+              ВЫВЕДЕМ ВАШ БРЕНД<br />НА РОССИЙСКИЙ РЫНОК
+            </p>
+            
+            <div className="relative group mb-12">
+              <div className="absolute inset-0 bg-gradient-to-r from-[#6B2C2C] via-[#8B4C4C] to-[#6B2C2C] rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition-all duration-300"></div>
+              <button className="relative px-16 py-8 bg-gradient-to-r from-[#6B2C2C] to-[#541F1F] rounded-2xl text-2xl font-black text-white shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 border border-white/20">
+                Свяжитесь с нами
+              </button>
+            </div>
+            
+            <div className="space-y-3">
+              <p className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                Centre digital & media
+              </p>
+              <p className="text-lg font-light text-gray-400 tracking-wide">
+                Ваш проводник на российском рынке
+              </p>
+            </div>
           </div>
         </div>
       </div>
