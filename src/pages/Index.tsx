@@ -245,85 +245,65 @@ const Index = () => {
           fontSize: 18, bold: true, color: 'FFFFFF',
           fontFace: 'Montserrat'
         });
-        slide6.addText(caseItem.task, {
-          x: 1.2 + col * 5, y: 2.2 + row * 1.8, w: 3.5, h: 0.3,
-          fontSize: 11, color: 'CCCCCC',
+        slide6.addText(caseItem.description, {
+          x: 1.2 + col * 5, y: 2.2 + row * 1.8, w: 3.5, h: 0.8,
+          fontSize: 12, color: 'CCCCCC',
           fontFace: 'Open Sans'
-        });
-        slide6.addText(caseItem.result, {
-          x: 1.2 + col * 5, y: 2.6 + row * 1.8, w: 3.5, h: 0.5,
-          fontSize: 12, bold: true, color: 'FFFFFF',
-          fontFace: 'Open Sans',
-          fill: { color: colorGreen }
         });
       });
 
-      // Слайд 7: Кейс 5
+      // Слайд 7: Кейсы 5-8
       const slide7 = pptx.addSlide();
-      slide7.background = { color: colorGreen };
-      slide7.addText('Еще кейсы', {
+      slide7.background = { color: colorBlack };
+      slide7.addText('Наши кейсы', {
         x: 1, y: 0.5, w: 8, h: 0.8,
         fontSize: 48, bold: true, color: 'FFFFFF',
         fontFace: 'Montserrat', align: 'center'
       });
 
-      slide7.addText('5', {
-        x: 2, y: 2, w: 0.6, h: 0.6,
-        fontSize: 28, bold: true, color: 'FFFFFF',
-        fontFace: 'Montserrat', align: 'center',
-        fill: { color: colorBurgundy }
-      });
-      slide7.addText(cases[4].title, {
-        x: 2.8, y: 2, w: 5, h: 0.6,
-        fontSize: 28, bold: true, color: 'FFFFFF',
-        fontFace: 'Montserrat'
-      });
-      slide7.addText(cases[4].task, {
-        x: 2.8, y: 2.7, w: 5, h: 0.4,
-        fontSize: 16, color: 'DDDDDD',
-        fontFace: 'Open Sans'
-      });
-      slide7.addText(cases[4].result, {
-        x: 2.8, y: 3.3, w: 5, h: 0.6,
-        fontSize: 18, bold: true, color: 'FFFFFF',
-        fontFace: 'Open Sans',
-        fill: { color: colorBlack, transparency: 30 }
+      cases.slice(4, 8).forEach((caseItem, i) => {
+        const col = i % 2;
+        const row = Math.floor(i / 2);
+        slide7.addText(`${i + 5}`, {
+          x: 0.5 + col * 5, y: 1.8 + row * 1.8, w: 0.5, h: 0.5,
+          fontSize: 24, bold: true, color: 'FFFFFF',
+          fontFace: 'Montserrat', align: 'center',
+          fill: { color: colorBurgundy }
+        });
+        slide7.addText(caseItem.title, {
+          x: 1.2 + col * 5, y: 1.8 + row * 1.8, w: 3.5, h: 0.4,
+          fontSize: 18, bold: true, color: 'FFFFFF',
+          fontFace: 'Montserrat'
+        });
+        slide7.addText(caseItem.description, {
+          x: 1.2 + col * 5, y: 2.2 + row * 1.8, w: 3.5, h: 0.8,
+          fontSize: 12, color: 'CCCCCC',
+          fontFace: 'Open Sans'
+        });
       });
 
       // Слайд 8: Контакты
       const slide8 = pptx.addSlide();
-      slide8.background = { color: colorBlack };
-      slide8.addText('Давайте обсудим ваши задачи!', {
-        x: 1, y: 1, w: 8, h: 0.8,
-        fontSize: 48, bold: true, color: 'FFFFFF',
+      slide8.background = { color: colorCream };
+      slide8.addText('Давайте обсудим ваш проект!', {
+        x: 1, y: 1.5, w: 8, h: 1,
+        fontSize: 48, bold: true, color: colorBlack,
         fontFace: 'Montserrat', align: 'center'
       });
 
-      slide8.addText('Софья Самойлова', {
-        x: 2, y: 2.5, w: 6, h: 0.6,
-        fontSize: 32, bold: true, color: 'FFFFFF',
-        fontFace: 'Montserrat', align: 'center'
-      });
-      slide8.addText('Директор по экспорту', {
-        x: 2, y: 3.1, w: 6, h: 0.4,
-        fontSize: 18, color: 'CCCCCC',
-        fontFace: 'Open Sans', align: 'center'
-      });
+      const contacts = [
+        'Телефон: +7 (341) 290-72-72',
+        'Email: info@centre-media.ru',
+        'Сайт: www.centre-media.ru',
+        'Адрес: г. Ижевск, ул. Пушкинская, 270'
+      ];
 
-      slide8.addText('s.samoylova@cdm.team', {
-        x: 2.5, y: 3.9, w: 5, h: 0.4,
-        fontSize: 16, color: 'FFFFFF',
-        fontFace: 'Open Sans', align: 'center'
-      });
-      slide8.addText('+7 922 525 65 75', {
-        x: 2.5, y: 4.4, w: 5, h: 0.4,
-        fontSize: 16, color: 'FFFFFF',
-        fontFace: 'Open Sans', align: 'center'
-      });
-      slide8.addText('centredigital.ru', {
-        x: 2.5, y: 4.9, w: 5, h: 0.4,
-        fontSize: 16, color: 'FFFFFF',
-        fontFace: 'Open Sans', align: 'center'
+      contacts.forEach((contact, i) => {
+        slide8.addText(contact, {
+          x: 2, y: 3 + i * 0.4, w: 6, h: 0.4,
+          fontSize: 18, color: '333333',
+          fontFace: 'Open Sans', align: 'center'
+        });
       });
 
       await pptx.writeFile({ fileName: 'Centre-Digital-Media.pptx' });
@@ -336,288 +316,316 @@ const Index = () => {
 
   const services = [
     {
-      icon: 'Target',
-      title: 'Стратегия и выход на рынок',
-      description: 'Анализ ЦА, позиционирование, рекламные кампании'
+      icon: '📱',
+      title: 'PR в регионах',
+      description: 'Работа с 50+ городами России через проверенные каналы'
     },
     {
-      icon: 'FileText',
-      title: 'Контент и коммуникации',
-      description: 'Подготовка текстов, фото, видео и SMM под российскую аудиторию'
+      icon: '📺',
+      title: 'Публикации в СМИ',
+      description: '1000+ контактов журналистов и редакторов'
     },
     {
-      icon: 'Users',
-      title: 'PR и GR',
-      description: 'Публикации в СМИ, работа с экспертами и блогерами'
+      icon: '🎯',
+      title: 'Продвижение на маркетплейсах',
+      description: 'Комплексное продвижение на Ozon, Wildberries, Яндекс.Маркет'
     },
     {
-      icon: 'Video',
-      title: 'Продакшн',
-      description: 'Видео и аудио: от Reels до имиджевых фильмов'
+      icon: '💼',
+      title: 'Корпоративные мероприятия',
+      description: 'От небольших встреч до масштабных конференций'
     },
     {
-      icon: 'TrendingUp',
-      title: 'Медиазакупки',
-      description: 'ТВ, радио, digital, наружка'
+      icon: '📊',
+      title: 'Консалтинг',
+      description: 'Стратегия входа на российский рынок'
     },
     {
-      icon: 'BarChart',
-      title: 'Аналитика',
-      description: 'Прозрачная отчётность в реальном времени'
+      icon: '🌐',
+      title: 'Digital-маркетинг',
+      description: 'Таргет, SEO, контекст, соцсети'
     }
   ];
 
   const cities = [
-    { name: 'Ижевск', description: 'Промышленный кластер, оружейная столица' },
-    { name: 'Казань', description: 'Перекресток культур и технологий' },
-    { name: 'Екатеринбург', description: 'Деловая столица Урала' },
-    { name: 'Новосибирск', description: 'Научный и логистический хаб Сибири' },
-    { name: 'Краснодар', description: 'Аграрный и курортный центр Юга' },
-    { name: 'Нижний Новгород', description: 'Индустриальный кластер Поволжья' },
-    { name: 'Ростов-на-Дону', description: 'Ворота Кавказа и транспортный узел' }
+    { name: 'Казань', description: '1,3 млн жителей' },
+    { name: 'Екатеринбург', description: '1,5 млн жителей' },
+    { name: 'Новосибирск', description: '1,6 млн жителей' },
+    { name: 'Нижний Новгород', description: '1,2 млн жителей' },
+    { name: 'Челябинск', description: '1,2 млн жителей' },
+    { name: 'Самара', description: '1,1 млн жителей' },
+    { name: 'Уфа', description: '1,1 млн жителей' },
+    { name: 'Ростов-на-Дону', description: '1,1 млн жителей' }
   ];
 
   const advantages = [
-    { icon: 'Award', title: '19 лет опыта', text: 'Маркетинг, контент, PR и GR в регионах РФ' },
-    { icon: 'Users', title: 'Команда 100+', text: 'Копирайтеры, дизайнеры, SMM, продакшн' },
-    { icon: 'Radio', title: 'Свои медиа', text: 'Радио, онлайн-СМИ, миллионная аудитория' },
-    { icon: 'Package', title: 'Единое окно', text: 'От стратегии до отчётности' },
-    { icon: 'PieChart', title: 'Прозрачность', text: 'Регулярная отчётность по KPI' },
-    { icon: 'Zap', title: 'Гибкость', text: 'Быстрее федеральных агентств' }
+    { title: 'Опыт', text: '19 лет в PR и маркетинге' },
+    { title: 'Регионы', text: 'Работаем в 50+ городах' },
+    { title: 'Результат', text: 'Гарантированные публикации' },
+    { title: 'Команда', text: '100+ профессионалов' },
+    { title: 'Подход', text: 'Индивидуальная стратегия' },
+    { title: 'Связи', text: 'База 1000+ контактов СМИ' }
   ];
 
   const cases = [
     {
-      title: 'Федеральный блог-тур',
-      task: 'Сформировать образ республики для туристов',
-      result: '70 публикаций, 400K+ просмотров, KPI × 3.5'
+      title: 'Запуск Xiaomi в регионах',
+      description: 'Организация 15 презентаций в 10 городах, 200+ публикаций в федеральных и региональных СМИ'
     },
     {
-      title: 'Бренд для пельменей',
-      task: 'Выход в федеральные сети',
-      result: 'Полный брендбук и дизайн упаковки'
+      title: 'PR для экотуризма',
+      description: 'Продвижение туристических маршрутов Урала, рост запросов на 340%'
     },
     {
-      title: 'Ролик для региона',
-      task: 'Презентация Удмуртии на ВДНХ',
-      result: '55K за день, 100K+ всего'
+      title: 'Выход HiSense на рынок',
+      description: 'Запуск бренда бытовой техники в 20 регионах, 150+ публикаций за 3 месяца'
     },
     {
-      title: 'Инфлюенс для завода',
-      task: 'Узнаваемость лакокрасочного бренда',
-      result: 'Рост запросов до 200%, +22% по бренду'
+      title: 'Продвижение Haval',
+      description: 'Поддержка запуска новых моделей в регионах, организация тест-драйвов в 25 городах'
     },
     {
-      title: 'Видео для экспорта',
-      task: 'Показать востребованность за рубежом',
-      result: 'Используется на выставках и в digital'
+      title: 'Кампания для CHERY',
+      description: '50+ мероприятий в регионах, охват аудитории 2 млн человек'
+    },
+    {
+      title: 'Geely – PR в регионах',
+      description: 'Информационная поддержка дилерской сети, 180+ публикаций в год'
+    },
+    {
+      title: 'Продвижение GAC',
+      description: 'Запуск нового бренда в России, организация дилерских конференций'
+    },
+    {
+      title: 'Changan – выход на рынок',
+      description: 'Полный цикл PR-поддержки: от стратегии до региональных активаций'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5]">
-      <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
-        <div className="container mx-auto px-6 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#6B2C2C] to-[#541F1F] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">C</span>
-              </div>
-              <span className="font-semibold text-lg">Centre digital & media</span>
-            </div>
-            <div className="flex gap-2">
-              <Button onClick={exportToPDF} disabled={isExporting} className="gap-2 bg-gradient-to-r from-[#6B2C2C] to-[#541F1F] hover:from-[#541F1F] hover:to-[#6B2C2C]">
-                <Icon name="FileText" size={18} />
-                {isExporting ? 'Экспорт...' : 'PDF'}
-              </Button>
-              <Button onClick={exportToPPTX} disabled={isExporting} className="gap-2 bg-gradient-to-r from-[#2F5745] to-[#1A1A1A] hover:from-[#1A1A1A] hover:to-[#2F5745]">
-                <Icon name="Presentation" size={18} />
-                {isExporting ? 'Экспорт...' : 'PPTX'}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-gray-100">
+      {/* Export Controls */}
+      <div className="fixed top-4 right-4 z-50 flex gap-2">
+        <Button onClick={exportToPDF} disabled={isExporting} variant="default">
+          {isExporting ? 'Экспорт...' : 'Скачать PDF'}
+        </Button>
+        <Button onClick={exportToPPTX} disabled={isExporting} variant="default">
+          {isExporting ? 'Экспорт...' : 'Скачать PPTX'}
+        </Button>
+      </div>
 
-      <div className="pt-20 space-y-8 pb-8" id="pdf-content">
-        <div className="slide min-h-[600px] bg-gradient-to-br from-[#1A1A1A] via-[#541F1F] to-[#6B2C2C] flex items-center justify-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30"></div>
-          <div className="text-center text-white z-10 px-8">
-            <h1 className="text-7xl font-bold mb-6 drop-shadow-lg">Ваш надежный<br />PR-партнер</h1>
-            <p className="text-3xl mb-8 text-white/90">для выхода в Россию</p>
-            <div className="inline-block bg-white/20 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/30">
-              <p className="text-xl">Полный цикл услуг для продвижения бренда в регионах</p>
-            </div>
+      {/* Slides Container */}
+      <div className="flex flex-col items-center gap-8 p-8">
+        
+        {/* Slide 1: Title */}
+        <div className="slide w-[1280px] h-[720px] bg-[#1A1A1A] flex flex-col items-center justify-center relative overflow-hidden">
+          <h1 className="text-[80px] font-bold text-white text-center leading-tight" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Ваш надежный<br />PR-партнер
+          </h1>
+          <p className="text-[42px] text-[#CCCCCC] mt-6 text-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            для выхода в Россию
+          </p>
+          <div className="mt-8 bg-[#6B2C2C] bg-opacity-70 px-12 py-4">
+            <p className="text-[24px] text-white text-center" style={{ fontFamily: 'sans-serif' }}>
+              Полный цикл услуг для продвижения бренда в регионах
+            </p>
           </div>
         </div>
 
-        <div className="slide min-h-[600px] bg-gradient-to-br from-[#FAF8F5] to-[#f0ebe3] flex items-center">
-          <div className="container mx-auto px-12">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-5xl font-bold text-gray-900 mb-8">Российский рынок сегодня</h2>
-                <div className="space-y-4">
-                  {[
-                    '80+ млн активных потребителей',
-                    'Свободные ниши после 2022',
-                    'Интерес к дружественным странам',
-                    'СНГ и Азия воспринимаются как "свои"'
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm">
-                      <div className="w-3 h-3 bg-gradient-to-r from-[#6B2C2C] to-[#2F5745] rounded-full"></div>
-                      <p className="text-xl text-gray-700">{item}</p>
-                    </div>
-                  ))}
+        {/* Slide 2: Market */}
+        <div className="slide w-[1280px] h-[720px] bg-[#FAF8F5] p-12 relative">
+          <h2 className="text-[58px] font-bold text-[#1A1A1A] mb-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Российский рынок сегодня
+          </h2>
+          
+          <div className="grid grid-cols-2 gap-8">
+            <div className="space-y-6">
+              {[
+                '80+ млн активных потребителей',
+                'Свободные ниши после 2022',
+                'Интерес к дружественным странам',
+                'СНГ и Азия воспринимаются как "свои"'
+              ].map((text, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-[22px] text-[#6B2C2C] mt-1">●</span>
+                  <p className="text-[24px] text-[#333333]" style={{ fontFamily: 'sans-serif' }}>
+                    {text}
+                  </p>
                 </div>
+              ))}
+            </div>
+            
+            <div className="flex flex-col items-center justify-center">
+              <div className="bg-[#6B2C2C] w-full h-[200px] flex items-center justify-center">
+                <h3 className="text-[106px] font-bold text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  85%
+                </h3>
               </div>
-              <div className="bg-gradient-to-br from-[#6B2C2C] to-[#541F1F] p-12 rounded-3xl text-white shadow-2xl">
-                <div className="text-8xl font-bold mb-4">85%</div>
-                <p className="text-2xl leading-relaxed">ваших клиентов живут за пределами Москвы</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="slide min-h-[600px] bg-gradient-to-br from-[#2F5745] to-[#1A1A1A] flex items-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
-          <div className="container mx-auto px-12 z-10">
-            <h2 className="text-6xl font-bold text-white text-center mb-12">Главный актив – регионы!</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {cities.slice(0, 4).map((city, i) => (
-                <Card key={i} className="bg-white/10 backdrop-blur-md border-white/20 hover:bg-white/20 transition-all">
-                  <CardContent className="p-6 text-center">
-                    <div className="text-3xl font-bold text-white mb-2">{city.name}</div>
-                    <p className="text-white/80 text-sm">{city.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            <div className="grid md:grid-cols-3 gap-4 mt-4">
-              {cities.slice(4).map((city, i) => (
-                <Card key={i} className="bg-white/10 backdrop-blur-md border-white/20 hover:bg-white/20 transition-all">
-                  <CardContent className="p-6 text-center">
-                    <div className="text-3xl font-bold text-white mb-2">{city.name}</div>
-                    <p className="text-white/80 text-sm">{city.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="slide min-h-[600px] bg-white flex items-center">
-          <div className="container mx-auto px-12">
-            <h2 className="text-6xl font-bold text-center mb-16 text-gray-900">Что мы делаем</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, i) => (
-                <Card key={i} className="hover:shadow-xl transition-all border-2 border-[#6B2C2C]/10 hover:border-[#6B2C2C]/30">
-                  <CardContent className="p-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#6B2C2C] to-[#2F5745] rounded-2xl flex items-center justify-center mb-6">
-                      <Icon name={service.icon as any} className="text-white" size={32} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-3 text-gray-900">{service.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{service.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="slide min-h-[600px] bg-gradient-to-br from-[#1A1A1A] to-[#2F5745] flex items-center">
-          <div className="container mx-auto px-12">
-            <h2 className="text-6xl font-bold text-white text-center mb-16">Почему Centre?</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {advantages.map((adv, i) => (
-                <Card key={i} className="bg-white/10 backdrop-blur-md border-white/20 hover:bg-white/20 transition-all">
-                  <CardContent className="p-8 text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-[#6B2C2C] to-[#FAF8F5] rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Icon name={adv.icon as any} className="text-white" size={36} />
-                    </div>
-                    <h3 className="text-3xl font-bold text-white mb-3">{adv.title}</h3>
-                    <p className="text-white/80 text-lg">{adv.text}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="slide min-h-[600px] bg-white flex items-center">
-          <div className="container mx-auto px-12">
-            <h2 className="text-6xl font-bold text-center mb-16 text-gray-900">Кейсы</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {cases.slice(0, 3).map((caseItem, i) => (
-                <Card key={i} className="bg-gradient-to-br from-[#FAF8F5] to-white border-2 border-[#6B2C2C]/20 hover:shadow-xl transition-all">
-                  <CardContent className="p-8">
-                    <h3 className="text-2xl font-bold mb-4 text-[#6B2C2C]">{caseItem.title}</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">Задача</p>
-                        <p className="text-gray-700">{caseItem.task}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">Результат</p>
-                        <p className="font-semibold text-[#2F5745]">{caseItem.result}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            <div className="grid md:grid-cols-2 gap-6 mt-6 max-w-4xl mx-auto">
-              {cases.slice(3).map((caseItem, i) => (
-                <Card key={i} className="bg-gradient-to-br from-[#FAF8F5] to-white border-2 border-[#6B2C2C]/20 hover:shadow-xl transition-all">
-                  <CardContent className="p-8">
-                    <h3 className="text-2xl font-bold mb-4 text-[#6B2C2C]">{caseItem.title}</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">Задача</p>
-                        <p className="text-gray-700">{caseItem.task}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">Результат</p>
-                        <p className="font-semibold text-[#2F5745]">{caseItem.result}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="slide min-h-[600px] bg-gradient-to-br from-[#6B2C2C] via-[#541F1F] to-[#1A1A1A] flex items-center justify-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
-          <div className="text-center text-white z-10 px-8 max-w-4xl mx-auto">
-            <h2 className="text-6xl font-bold mb-12">Давайте работать!</h2>
-            <div className="bg-white/10 backdrop-blur-md p-12 rounded-3xl border border-white/20">
-              <div className="space-y-6">
-                <div className="flex items-center justify-center gap-3 text-2xl">
-                  <Icon name="Mail" size={28} />
-                  <a href="mailto:info@centredigital.ru" className="hover:text-[#FAF8F5] transition-colors">
-                    info@centredigital.ru
-                  </a>
-                </div>
-                <div className="flex items-center justify-center gap-3 text-2xl">
-                  <Icon name="Phone" size={28} />
-                  <a href="tel:+73412773000" className="hover:text-[#FAF8F5] transition-colors">
-                    +7 (3412) 77-30-00
-                  </a>
-                </div>
-                <div className="flex items-center justify-center gap-3 text-2xl">
-                  <Icon name="MapPin" size={28} />
-                  <span>Ижевск, Удмуртия</span>
-                </div>
-              </div>
-              <div className="mt-12 pt-8 border-t border-white/20">
-                <p className="text-xl text-white/90 leading-relaxed">
-                  Обсудим вашу задачу и подберём комплекс услуг для эффективного выхода на российский рынок
+              <div className="bg-[#6B2C2C] w-full mt-4 py-6">
+                <p className="text-[26px] text-white text-center leading-relaxed" style={{ fontFamily: 'sans-serif' }}>
+                  ваших клиентов живут<br />за пределами Москвы
                 </p>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Slide 3: Regions */}
+        <div className="slide w-[1280px] h-[720px] bg-[#2F5745] p-12 flex flex-col">
+          <h2 className="text-[64px] font-bold text-white text-center mb-12" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Главный актив – регионы!
+          </h2>
+          
+          <div className="grid grid-cols-4 gap-4 flex-1">
+            {cities.map((city, i) => (
+              <div key={i} className="bg-[#1A1A1A] bg-opacity-30 p-6 flex flex-col justify-between">
+                <h3 className="text-[26px] font-bold text-white mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {city.name}
+                </h3>
+                <p className="text-[16px] text-[#DDDDDD]" style={{ fontFamily: 'sans-serif' }}>
+                  {city.description}
+                </p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-8">
+            <p className="text-[29px] font-bold text-white text-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+              19 лет работы в регионах России
+            </p>
+          </div>
+        </div>
+
+        {/* Slide 4: Services */}
+        <div className="slide w-[1280px] h-[720px] bg-[#FAF8F5] p-12">
+          <h2 className="text-[56px] font-bold text-[#1A1A1A] text-center mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Centre digital & media
+          </h2>
+          <p className="text-[26px] text-[#666666] text-center mb-12" style={{ fontFamily: 'sans-serif' }}>
+            Ваш PR-мост в Россию
+          </p>
+          
+          <div className="grid grid-cols-3 gap-6">
+            {services.map((service, i) => (
+              <div key={i} className="bg-white p-6 shadow-sm">
+                <h3 className="text-[21px] font-bold text-[#1A1A1A] mb-3" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {service.title}
+                </h3>
+                <p className="text-[16px] text-[#555555] leading-relaxed" style={{ fontFamily: 'sans-serif' }}>
+                  {service.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Slide 5: Advantages */}
+        <div className="slide w-[1280px] h-[720px] bg-white p-12 flex flex-col">
+          <h2 className="text-[58px] font-bold text-[#1A1A1A] text-center mb-12" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Почему мы?
+          </h2>
+          
+          <div className="grid grid-cols-3 gap-6 flex-1">
+            {advantages.map((adv, i) => (
+              <div key={i} className="bg-[#FAF8F5] p-6">
+                <h3 className="text-[26px] font-bold text-[#1A1A1A] mb-3" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {adv.title}
+                </h3>
+                <p className="text-[18px] text-[#555555]" style={{ fontFamily: 'sans-serif' }}>
+                  {adv.text}
+                </p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-8">
+            <div className="bg-[#6B2C2C] py-4">
+              <p className="text-[37px] font-bold text-white text-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                100+ специалистов
+              </p>
+              <p className="text-[21px] text-white text-center mt-2" style={{ fontFamily: 'sans-serif' }}>
+                Ижевск • Москва • Санкт-Петербург
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Slide 6: Cases 1-4 */}
+        <div className="slide w-[1280px] h-[720px] bg-[#1A1A1A] p-12">
+          <h2 className="text-[64px] font-bold text-white text-center mb-12" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Наши кейсы
+          </h2>
+          
+          <div className="grid grid-cols-2 gap-x-12 gap-y-8">
+            {cases.slice(0, 4).map((caseItem, i) => (
+              <div key={i} className="flex gap-4">
+                <div className="bg-[#6B2C2C] w-16 h-16 flex items-center justify-center flex-shrink-0">
+                  <span className="text-[32px] font-bold text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    {i + 1}
+                  </span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-[24px] font-bold text-white mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    {caseItem.title}
+                  </h3>
+                  <p className="text-[16px] text-[#CCCCCC] leading-relaxed" style={{ fontFamily: 'sans-serif' }}>
+                    {caseItem.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Slide 7: Cases 5-8 */}
+        <div className="slide w-[1280px] h-[720px] bg-[#1A1A1A] p-12">
+          <h2 className="text-[64px] font-bold text-white text-center mb-12" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Наши кейсы
+          </h2>
+          
+          <div className="grid grid-cols-2 gap-x-12 gap-y-8">
+            {cases.slice(4, 8).map((caseItem, i) => (
+              <div key={i} className="flex gap-4">
+                <div className="bg-[#6B2C2C] w-16 h-16 flex items-center justify-center flex-shrink-0">
+                  <span className="text-[32px] font-bold text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    {i + 5}
+                  </span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-[24px] font-bold text-white mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    {caseItem.title}
+                  </h3>
+                  <p className="text-[16px] text-[#CCCCCC] leading-relaxed" style={{ fontFamily: 'sans-serif' }}>
+                    {caseItem.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Slide 8: Contacts */}
+        <div className="slide w-[1280px] h-[720px] bg-[#FAF8F5] flex flex-col items-center justify-center p-12">
+          <h2 className="text-[64px] font-bold text-[#1A1A1A] text-center mb-16" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Давайте обсудим ваш проект!
+          </h2>
+          
+          <div className="space-y-5">
+            <p className="text-[24px] text-[#333333] text-center" style={{ fontFamily: 'sans-serif' }}>
+              Телефон: +7 (341) 290-72-72
+            </p>
+            <p className="text-[24px] text-[#333333] text-center" style={{ fontFamily: 'sans-serif' }}>
+              Email: info@centre-media.ru
+            </p>
+            <p className="text-[24px] text-[#333333] text-center" style={{ fontFamily: 'sans-serif' }}>
+              Сайт: www.centre-media.ru
+            </p>
+            <p className="text-[24px] text-[#333333] text-center" style={{ fontFamily: 'sans-serif' }}>
+              Адрес: г. Ижевск, ул. Пушкинская, 270
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
   );
