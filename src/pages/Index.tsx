@@ -36,7 +36,7 @@ const Index = () => {
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       }
 
-      pdf.save('Centre-Digital-Media-Presentation.pdf');
+      pdf.save('Centre-Digital-Media.pdf');
     } catch (error) {
       console.error('Error generating PDF:', error);
     } finally {
@@ -51,8 +51,8 @@ const Index = () => {
       pptx.layout = 'LAYOUT_WIDE';
       pptx.author = 'Centre digital & media';
       pptx.company = 'Centre digital & media';
-      pptx.subject = 'Презентация агентства';
-      pptx.title = 'Centre digital & media - Ваш PR-партнер';
+      pptx.subject = 'Agency Presentation';
+      pptx.title = 'Centre digital & media - PR Partner';
 
       const slides = document.querySelectorAll('.slide');
 
@@ -70,7 +70,7 @@ const Index = () => {
         slide.background = { data: imgData };
       }
 
-      await pptx.writeFile({ fileName: 'Centre-Digital-Media-Presentation.pptx' });
+      await pptx.writeFile({ fileName: 'Centre-Digital-Media.pptx' });
     } catch (error) {
       console.error('Error generating PPTX:', error);
     } finally {
